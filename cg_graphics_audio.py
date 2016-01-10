@@ -82,7 +82,7 @@ class CuriosityGame:
             self.items[name].name = name
 
             if 'label' in value:
-                self.items[name].item_lbl.text = value['label']
+                self.items[name].item_lbl.text = value['label'][::-1]
 
             if 'pos' in value:
                 self.items[name].pos = (int(value['pos']['x']), int(value['pos']['y']))
@@ -111,7 +111,8 @@ class CuriosityGame:
             self.the_widget.add_widget(value)
 
         # set the timer of the game
-        Clock.schedule_once(self.end_game, 120)
+        print('Starting clock...')
+        Clock.schedule_once(self.end_game, 180)
 
 
     def on_play(self, name, par):
@@ -125,7 +126,7 @@ class CuriosityGame:
         self.the_widget.cg_lbl.text = ''
 
     def end_game(self, dt):
-        self.the_app.sm.current = self.the_app.sm.next()
+        self.the_app.sm.current = 'question'
 
 
 class CuriosityWidget(FloatLayout):
@@ -137,7 +138,7 @@ class CuriosityWidget(FloatLayout):
             self.rect = Rectangle(source='cg_background_img.jpg')
             self.bind(size=self._update_rect, pos=self._update_rect)
         self.cg_lbl = Label(font_name='DejaVuSans.ttf', halign='right', text='',
-                            pos=(10, 10), font_size='30sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5])
+                            pos=(10, 10), font_size='24sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5])
         self.add_widget(self.cg_lbl)
 
     def _update_rect(self, instance, value):

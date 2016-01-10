@@ -1,7 +1,7 @@
 {
   "list": {
     "art": {
-      "label": "art",
+      "label": "אומנויות",
       "pos": {
         "x": "50",
         "y": "75"
@@ -54,7 +54,7 @@
       }
     },
     "eng": {
-      "label": "engineering",
+      "label": "הנדסה",
       "pos": {
         "x": "50",
         "y": "650"
@@ -107,7 +107,7 @@
       }
     },
     "exc": {
-      "label": "exact sciences",
+      "label": "מדעים מדויקים",
       "pos": {
         "x": "450",
         "y": "650"
@@ -160,7 +160,7 @@
       }
     },
     "hum": {
-      "label": "humanities",
+      "label": "מדעי הרוח",
       "pos": {
         "x": "850",
         "y": "650"
@@ -209,7 +209,7 @@
       }
     },
     "law": {
-      "label": "law",
+      "label": "משפטים",
       "pos": {
         "x": "450",
         "y": "75"
@@ -258,7 +258,7 @@
       }
     },
     "life": {
-      "label": "life sciences",
+      "label": "מדעי החיים",
       "pos": {
         "x": "850",
         "y": "75"
@@ -311,7 +311,7 @@
       }
     },
     "man": {
-      "label": "management",
+      "label": "ניהול",
       "pos": {
         "x": "1250",
         "y": "75"
@@ -364,7 +364,7 @@
       }
     },
     "med": {
-      "label": "medicine",
+      "label": "רפואה",
       "pos": {
         "x": "1250",
         "y": "650"
@@ -417,7 +417,7 @@
       }
     },
     "soc": {
-      "label": "social sciences",
+      "label": "מדעי החברה",
       "pos": {
         "x": "650",
         "y": "350"
