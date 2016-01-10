@@ -23,9 +23,11 @@ class AnswerButton(CheckBox, WidgetLogger):
 
 class QuestionsForm(BoxLayout):
     answers = {}
+    the_app = None
 
-    def __init__(self):
+    def __init__(self, app):
         super(QuestionsForm, self).__init__()
+        self.the_app = app
         with self.canvas.before:
             self.rect = Rectangle(source='back2.png')
             self.bind(size=self._update_rect, pos=self._update_rect)
@@ -91,7 +93,7 @@ class QuestionsForm(BoxLayout):
 
         layoutbuttons.add_widget(Button(background_color=[1, 0, 1, 1],
                                         text=dict['next_button'], font_size=20, font_name="DejaVuSans.ttf",
-                                        halign='right'))
+                                        halign='right', on_press=self.next))
         layoutbuttons.add_widget(BoxLayout(size_hint_x=0.2))
         layoutbuttons.add_widget(Button(background_color=[1, 0, 1, 1],
                                         text=dict['prev_button'], font_size=20, font_name="DejaVuSans.ttf",
@@ -104,3 +106,5 @@ class QuestionsForm(BoxLayout):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
+    def next(self, pars):
+        self.the_app.sm.current = self.the_app.sm.next()

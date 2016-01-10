@@ -111,7 +111,7 @@ class CuriosityGame:
             self.the_widget.add_widget(value)
 
         # set the timer of the game
-        Clock.schedule_once(self.end_game, 60)
+        Clock.schedule_once(self.end_game, 120)
 
 
     def on_play(self, name, par):
@@ -125,7 +125,7 @@ class CuriosityGame:
         self.the_widget.cg_lbl.text = ''
 
     def end_game(self, dt):
-        self.the_app.sm.current = 'question'
+        self.the_app.sm.current = self.the_app.sm.next()
 
 
 class CuriosityWidget(FloatLayout):
@@ -136,8 +136,8 @@ class CuriosityWidget(FloatLayout):
         with self.canvas.before:
             self.rect = Rectangle(source='cg_background_img.jpg')
             self.bind(size=self._update_rect, pos=self._update_rect)
-        self.cg_lbl = Label(font_name='DejaVuSans.ttf', halign='right', text='hello world',
-                            pos=(10, 10), font_size='30sp', size_hint_y=0.1)
+        self.cg_lbl = Label(font_name='DejaVuSans.ttf', halign='right', text='',
+                            pos=(10, 10), font_size='30sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5])
         self.add_widget(self.cg_lbl)
 
     def _update_rect(self, instance, value):

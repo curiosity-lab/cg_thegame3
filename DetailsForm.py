@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from kivy.graphics import Rectangle
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -6,7 +9,12 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.textinput import TextInput
-from kivy.uix.spinner import Spinner
+from kivy.uix.spinner import Spinner, SpinnerOption
+from kivy.properties import ObjectProperty
+
+
+class MySpinnerOption(SpinnerOption):
+    pass
 
 
 class DetailsForm(BoxLayout):
@@ -31,16 +39,15 @@ class DetailsForm(BoxLayout):
                     if kqa=='text':
                         dict[key][kqa] = qa[::-1]
                     elif kqa != 'ages':
-                        dict[key][kqa]={}
+                        dict[key][kqa]=[]
                         for k,v in value[kqa].items():
-                           dict[key][kqa][k]= v
+                           dict[key][kqa].append(v[::-1])
                     else:
                         dict[key][kqa]=[]
                         age=10
                         while age<100:
                             dict[key][kqa].append(str(age))
                             age+=1
-
 
 
         layout = GridLayout(cols=5, rows=7)
@@ -54,22 +61,23 @@ class DetailsForm(BoxLayout):
         layout.add_widget(
             Label(text=dict['LastName'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[1, 0, 1, 1]))
-        layout.add_widget(TextInput(size_hint_x=0.5))
+        layout.add_widget(TextInput(size_hint_x=0.5, font_name="DejaVuSans.ttf"))
         layout.add_widget(
             Label(text=dict['FirstName'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[1, 0, 1, 1]))
         layout.add_widget(BoxLayout())
         spinner = Spinner(
-        text="Choose Gender",
+        text="רכז",
         values=dict['Gender']['Genders'],
-        size=(50, 50) )
+        size=(50, 50), font_name="DejaVuSans.ttf",
+        option_cls = MySpinnerOption)
         layout.add_widget(spinner)
         layout.add_widget(
             Label(text=dict['Gender']['text'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[1, 0, 1, 1]))
         spinner = Spinner(
-        text="Choose Age",
-        values=dict['Age']['ages'])
+        text="20",
+        values=dict['Age']['ages'], font_name="DejaVuSans.ttf")
         layout.add_widget(spinner)
         layout.add_widget(
             Label(text=dict['Age']['text'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
@@ -83,9 +91,10 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout(size_hint_x=0.2))
         layout.add_widget(BoxLayout())
         spinner = Spinner(
-        text="Choose Faculty",
+        text="הסדנה",
         values=dict['Faculty']['Faculties'],
-        size=(50, 50) )
+        size=(50, 50), font_name="DejaVuSans.ttf",
+        option_cls = MySpinnerOption)
         layout.add_widget(spinner)
         layout.add_widget(
             Label(text=dict['Faculty']['text'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5,
@@ -98,7 +107,7 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
         layout.add_widget(
-            Label(text="Thanks from participating!", font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5))
+            Label(text="ךתופתתשה לע הדות", font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5))
         layoutup.add_widget(layout)
 
         self.add_widget(layoutup)
