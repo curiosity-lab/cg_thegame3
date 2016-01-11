@@ -77,6 +77,7 @@ class CuriosityGame:
 
         items_json = JsonStore(items_path + 'items.json')
         items_list = items_json.get('list')
+
         for name, value in items_list.items():
             self.items[name] = Item(do_rotation=False, do_scale=False)
             self.items[name].name = name
@@ -104,7 +105,8 @@ class CuriosityGame:
                         self.items[name].info[int(kt)]['audio'].bind(
                                 on_stop=partial(self.on_stop, name))
                     except:
-                        Logger.info('audio: cant find ' + items_path + t['audio'])
+                        if 'audio' in t:
+                            Logger.info('audio: cant find ' + items_path + t['audio'])
 
         # set widgets
         for key, value in self.items.items():

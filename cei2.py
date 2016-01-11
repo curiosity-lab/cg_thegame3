@@ -34,7 +34,7 @@ class QuestionsForm(BoxLayout):
         dict = {'q_in_page': [], 'qu_title': "", 'qu_description': "", 'ques': {},
                 'ans': {}, 'next_button': "", 'prev_button': ""}
         self.answers = {}
-        store = JsonStore('questions.json').get('questionnaire')
+        store = JsonStore('questions.json', encoding='utf-8').get('questionnaire')
 
         for key, value in store.items():
             if key in ['qu_title', 'next_button', 'prev_button', 'questions']:
