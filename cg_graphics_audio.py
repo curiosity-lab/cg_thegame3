@@ -112,7 +112,7 @@ class CuriosityGame:
 
         # set the timer of the game
         print('Starting clock...')
-        Clock.schedule_once(self.end_game, 180)
+        Clock.schedule_once(self.end_game, 120)
 
 
     def on_play(self, name, par):
