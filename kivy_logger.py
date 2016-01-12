@@ -1,6 +1,11 @@
 import json
 import socket
-from Crypto.PublicKey import RSA
+is_pycrypto = True
+try:
+    from Crypto.PublicKey import RSA
+except:
+    print('no pycrypto')
+    is_pycrypto = False
 from datetime import datetime
 from kivy.logger import Logger
 from kivy.storage.jsonstore import JsonStore
@@ -73,6 +78,9 @@ class KivyLogger:
         if DataMode.communication in KivyLogger.base_mode:
             KivyLogger.connect()
 
+        if not is_pycrypto:
+            KivyLogger.base_mode.remove(DataMode.encrypted)
+
         if DataMode.encrypted in KivyLogger.base_mode:
             KivyLogger.get_public_key()
             KivyLogger.save('public_key:' + KivyLogger.public_key.exportKey("PEM"))
@@ -135,9 +143,12 @@ class KivyLogger:
 
     @staticmethod
     def save(data_str):
-        KivyLogger.store.put(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'),
-                             data=str(data_str).encode('ascii'))
-        Logger.info("save:" + str(KivyLogger.filename))
+        try:
+            KivyLogger.store.put(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'),
+                                 data=str(data_str).encode('ascii'))
+            Logger.info("save:" + str(KivyLogger.filename))
+        except:
+            Logger.info("save: did not work")
 
     @staticmethod
     def to_str(log):
