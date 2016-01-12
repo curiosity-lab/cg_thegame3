@@ -54,17 +54,17 @@ class DetailsForm(BoxLayout):
         layoutup = BoxLayout(orientation='vertical')
         layoutup.add_widget(
              Label(text=dict['details_title'], font_size=50, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
-                   color=[1, 0, 1, 1]))
+                  color=[0.235294, 0.701961, 0.443137, 1]))
         layoutup.add_widget(BoxLayout(size_hint_y=0.2))
         layout.add_widget(BoxLayout(size_hint_y=0.2))
         layout.add_widget(TextInput(size_hint_x=0.5))
         layout.add_widget(
-            Label(text=dict['LastName'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
-                   color=[1, 0, 1, 1]))
+            Label(text=dict['LastName'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
+                   color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(TextInput(size_hint_x=0.5, font_name="DejaVuSans.ttf"))
         layout.add_widget(
-            Label(text=dict['FirstName'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
-                   color=[1, 0, 1, 1]))
+            Label(text=dict['FirstName'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
+                   color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(BoxLayout())
         spinner = Spinner(
         text="רכז",
@@ -73,20 +73,20 @@ class DetailsForm(BoxLayout):
         option_cls = MySpinnerOption)
         layout.add_widget(spinner)
         layout.add_widget(
-            Label(text=dict['Gender']['text'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
-                   color=[1, 0, 1, 1]))
+            Label(text=dict['Gender']['text'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
+                   color=[0.235294, 0.701961, 0.443137, 1]))
         spinner = Spinner(
         text="20",
         values=dict['Age']['ages'], font_name="DejaVuSans.ttf")
         layout.add_widget(spinner)
         layout.add_widget(
-            Label(text=dict['Age']['text'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
-                   color=[1, 0, 1, 1]))
+            Label(text=dict['Age']['text'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
+                   color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(BoxLayout(size_hint_x=0.2))
         layout.add_widget(TextInput(size_hint_x=2))
         layout.add_widget(
-            Label(text=dict['Email'], font_size=20, font_name="DejaVuSans.ttf", halign='right',
-                   color=[1, 0, 1, 1]))
+            Label(text=dict['Email'], font_size=30, font_name="DejaVuSans.ttf", halign='right',
+                   color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(BoxLayout(size_hint_x=0.2))
         layout.add_widget(BoxLayout(size_hint_x=0.2))
         layout.add_widget(BoxLayout())
@@ -97,17 +97,17 @@ class DetailsForm(BoxLayout):
         option_cls = MySpinnerOption)
         layout.add_widget(spinner)
         layout.add_widget(
-            Label(text=dict['Faculty']['text'], font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5,
-                   color=[1, 0, 1, 1]))
+            Label(text=dict['Faculty']['text'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5,
+                   color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
-        layout.add_widget(Button(background_color=[1, 0, 1, 1],
-                                 text=dict['end_button'], font_size=20, font_name="DejaVuSans.ttf",
+        layout.add_widget(Button(background_color=[0.235294, 0.701961, 0.443137, 1],
+                                 text=dict['end_button'], font_size=30, font_name="DejaVuSans.ttf",
                                  halign='right'))
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
         layout.add_widget(
-            Label(text="ךתופתתשה לע הדות", font_size=20, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5))
+            Label(text="ךתופתתשה לע הדות", font_size=35, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5))
         layoutup.add_widget(layout)
 
         self.add_widget(layoutup)

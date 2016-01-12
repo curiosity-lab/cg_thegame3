@@ -48,7 +48,7 @@ class QuestionsForm(BoxLayout):
         layoutup = BoxLayout(orientation='vertical')
         layoutup.add_widget(
             Label(text=dict['qu_title'], font_size=50, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
-                  color=[1, 0, 1, 1]))
+                  color=[0.235294, 0.701961, 0.443137, 1]))
         layoutup.add_widget(BoxLayout(size_hint_y=0.5))
         layoutup.add_widget(
             Label(text=dict['qu_description']['d1'], font_name="DejaVuSans.ttf", font_size=40, halign='right',
@@ -91,13 +91,11 @@ class QuestionsForm(BoxLayout):
         layoutup.add_widget(BoxLayout())
         layoutbuttons = BoxLayout(size_hint_y=0.2)
 
-        layoutbuttons.add_widget(Button(background_color=[1, 0, 1, 1],
+        layoutbuttons.add_widget(Button(background_color=[0.235294, 0.701961, 0.443137, 1],
                                         text=dict['next_button'], font_size=20, font_name="DejaVuSans.ttf",
                                         halign='right', on_press=self.next))
         layoutbuttons.add_widget(BoxLayout(size_hint_x=0.2))
-        layoutbuttons.add_widget(Button(background_color=[1, 0, 1, 1],
-                                        text=dict['prev_button'], font_size=20, font_name="DejaVuSans.ttf",
-                                        halign='right'))
+
 
         layoutup.add_widget(layoutbuttons)
         self.add_widget(layoutup)
