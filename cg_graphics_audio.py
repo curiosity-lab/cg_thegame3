@@ -22,15 +22,13 @@ class Item(Scatter, WidgetLogger):
     img = {}
     info = {}
     current = 1
-    is_playing = False
+    cg = None
 
     def change_img(self, im = '1'):
         if im in self.img:
             self.source = self.img[im]
 
     def on_transform_with_touch(self, touch):
-        #if LogAction.press.value == 1:
-        #    pass
         if self.collide_point(*touch.pos):
             self.play()
 
@@ -39,17 +37,17 @@ class Item(Scatter, WidgetLogger):
         if self.current in self.info:
             if 'audio' in self.info[self.current]:
                 # if not playing
-                if not self.is_playing:
+                if not self.cg.is_playing:
                     self.info[self.current]['audio'].play()
 
     def on_play(self):
         super(Item, self).on_play_wl(self.info[self.current]['audio'].source)
-        self.is_playing = True
+        self.cg.is_playing = True
         self.change_img('2')
 
     def on_stop(self):
         super(Item, self).on_stop_wl(self.info[self.current]['audio'].source)
-        self.is_playing = False
+        self.cg.is_playing = False
         self.current += 1
         CuriosityGame.current += 1
         self.change_img('1')
@@ -67,6 +65,7 @@ class CuriosityGame:
     current = 0
     the_app = None
     the_widget = None
+    is_playing = False
 
     def __init__(self, parent_app):
         self.the_app = parent_app
@@ -81,6 +80,7 @@ class CuriosityGame:
         for name, value in items_list.items():
             self.items[name] = Item(do_rotation=False, do_scale=False)
             self.items[name].name = name
+            self.items[name].cg = self
 
             if 'label' in value:
                 self.items[name].item_lbl.text = value['label'][::-1]
