@@ -114,9 +114,11 @@ class CuriosityGame:
         for key, value in self.items.items():
             self.the_widget.add_widget(value)
 
+    def start(self):
         # set the timer of the game
         print('Starting clock...')
         Clock.schedule_once(self.end_game, self.game_duration)
+        self.the_app.score.start_game()
 
 
     def on_play(self, name, par):

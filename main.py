@@ -43,6 +43,8 @@ class CuriosityApp(App):
         screen.add_widget(self.df)
         self.sm.add_widget(screen)
 
+        self.cg.start()
+
         return self.sm
 
 

@@ -4,6 +4,7 @@ from math import log
 
 class CuriosityScore:
     id = ''
+    start = []
     game_sequence = []
     cei2 = {}
     max_duration = 0
@@ -19,8 +20,13 @@ class CuriosityScore:
         self.game_sequence = []
         self.cei2 = {}
 
+    def start_game(self):
+        self.start.append(datetime.now())
+
     def add_game_item_begin(self, item):
         self.game_sequence.append([item, datetime.now()])
+        if len(self.start) == 1:
+            self.start.append(datetime.now())
 
     def add_game_item_end(self, item):
         for i in self.game_sequence:
@@ -43,6 +49,12 @@ class CuriosityScore:
 
 
     def calculate_score(self):
+        # initial exploration
+        init_exploration = 0
+        if len(self.start) == 2:
+            init_exploration = (self.start[1] - self.start[0]).seconds
+        self.score['init'] = init_exploration
+
         # total listening time
         total_info = 0
         for i in self.game_sequence:
@@ -77,9 +89,9 @@ class CuriosityScore:
         self.save()
 
     def save(self):
-        print(self.pathname)
         store = JsonStore(self.pathname + 'CuriosityScore.txt')
         store.put(self.id.strftime('%Y_%m_%d_%H_%M_%S_%f'),
+                  init=self.score['init'],
                   total=self.score['total_info'],
                   multi=self.score['multi'],
                   stretching=self.score['stretching'],
