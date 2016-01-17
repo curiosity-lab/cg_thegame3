@@ -125,7 +125,6 @@ class KivyLogger:
             t = datetime.now()
         data = {'time':t, 'action':action, 'obj':obj, 'comment':comment}
         KivyLogger.logs.append(data)
-        print('data:', data)
         if not mode:
             mode = KivyLogger.base_mode
 
@@ -177,7 +176,6 @@ class WidgetLogger(Widget):
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
-            print("wl touch down: " + self.name)
             self.log_touch(LogAction.down, touch)
             super(WidgetLogger, self).on_touch_down(touch)
 

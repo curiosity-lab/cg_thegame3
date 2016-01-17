@@ -7,6 +7,8 @@ from DetailsForm import *
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy_logger import *
+from curiosity_score import *
+
 
 
 class CuriosityApp(App):
@@ -14,6 +16,7 @@ class CuriosityApp(App):
     cg = None
     qf = None
     df = None
+    score = None
     float_layout = None
 
     def build(self):
@@ -23,6 +26,8 @@ class CuriosityApp(App):
         self.cg = CuriosityGame(self)
         self.qf = QuestionsForm(self)
         self.df = DetailsForm()
+
+        self.score = CuriosityScore(self.cg.game_duration, len(self.cg.items), self.user_data_dir)
 
         self.sm = ScreenManager()
 

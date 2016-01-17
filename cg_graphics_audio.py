@@ -9,11 +9,12 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.uix.floatlayout import FloatLayout
 from functools import partial
-from kivy_logger import *
 from kivy.storage.jsonstore import JsonStore
 from kivy.graphics import Rectangle
 from kivy.uix.label import Label
 from kivy.clock import Clock
+from curiosity_score import *
+from kivy_logger import *
 
 
 class Item(Scatter, WidgetLogger):
@@ -66,6 +67,7 @@ class CuriosityGame:
     the_app = None
     the_widget = None
     is_playing = False
+    game_duration = 120
 
     def __init__(self, parent_app):
         self.the_app = parent_app
@@ -114,7 +116,7 @@ class CuriosityGame:
 
         # set the timer of the game
         print('Starting clock...')
-        Clock.schedule_once(self.end_game, 120)
+        Clock.schedule_once(self.end_game, self.game_duration)
 
 
     def on_play(self, name, par):
@@ -122,10 +124,12 @@ class CuriosityGame:
         text = self.items[name].get_text()
         if text:
             self.the_widget.cg_lbl.text = text
+        self.the_app.score.add_game_item_begin(name)
 
     def on_stop(self, name, par):
         self.items[name].on_stop()
         self.the_widget.cg_lbl.text = ''
+        self.the_app.score.add_game_item_end(name)
 
     def end_game(self, dt):
         self.the_app.sm.current = 'question'
@@ -141,6 +145,9 @@ class CuriosityWidget(FloatLayout):
             self.bind(size=self._update_rect, pos=self._update_rect)
         self.cg_lbl = Label(font_name='DejaVuSans.ttf', halign='right', text='',
                             pos=(10, 10), font_size='24sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5])
+        self.cg_lbl.size = [500, 100]#self.rect.size#[self.width, self.cg_lbl.height]#cg_lbl.texture_size
+        self.cg_lbl.text_size = self.cg_lbl.size
+
         self.add_widget(self.cg_lbl)
 
     def _update_rect(self, instance, value):

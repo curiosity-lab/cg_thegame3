@@ -7,7 +7,7 @@ from kivy.uix.button import Button
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
-
+import collections
 from kivy_logger import *
 
 
@@ -18,12 +18,15 @@ class AnswerButton(CheckBox, WidgetLogger):
 
     def on_press(self, *args):
         super(AnswerButton, self).on_press(*args)
-        self.form.answers[self.question] = self.answer
+        print(self.answer)
+        self.form.set_answer(self.question, self.answer)
 
 
 class QuestionsForm(BoxLayout):
     answers = {}
     the_app = None
+    questions = {}
+    next_button = None
 
     def __init__(self, app):
         super(QuestionsForm, self).__init__()
@@ -43,6 +46,10 @@ class QuestionsForm(BoxLayout):
                 dict[key] = {}
                 for kqa, qa in value.items():
                     dict[key][kqa] = qa[::-1]
+        dict['ques'] = collections.OrderedDict(sorted(dict['ques'].items()))
+        dict['ans'] = collections.OrderedDict(sorted(dict['ans'].items()))
+
+        self.questions = dict['ques']
 
         layout = GridLayout(cols=len(dict['ans']) + 2, rows=len(dict['ques']) + 1, row_default_height=40)
         layoutup = BoxLayout(orientation='vertical')
@@ -67,7 +74,6 @@ class QuestionsForm(BoxLayout):
             q_counter += 1
             if q_counter == 1:
                 for ans in dict['ans']:
-                    print(ans)
                     layout.add_widget(
                         Label(size_hint_x=0.1, text=dict['ans'][ans], font_name="DejaVuSans.ttf", halign='right'))
                 layout.add_widget(
@@ -90,19 +96,30 @@ class QuestionsForm(BoxLayout):
         layoutup.add_widget(layout)
         layoutup.add_widget(BoxLayout())
         layoutbuttons = BoxLayout(size_hint_y=0.2)
-
-        layoutbuttons.add_widget(Button(background_color=[0.235294, 0.701961, 0.443137, 1],
+        self.next_button = Button(background_color=[0.235294, 0.701961, 0.443137, 1],
                                         text=dict['next_button'], font_size=20, font_name="DejaVuSans.ttf",
-                                        halign='right', on_press=self.next))
+                                        halign='right', on_press=self.next, disabled=True)
+        layoutbuttons.add_widget(self.next_button)
         layoutbuttons.add_widget(BoxLayout(size_hint_x=0.2))
 
 
         layoutup.add_widget(layoutbuttons)
         self.add_widget(layoutup)
 
+    def set_answer(self, question, answer):
+        self.answers[question] = answer
+        print(self.answers)
+        all_answered = True
+        for qk,qv in self.questions.items():
+            if qk not in self.answers:
+                all_answered = False
+        if all_answered:
+            self.next_button.disabled = False
+
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
     def next(self, pars):
+        self.the_app.score.set_cei2(self.answers)
         self.the_app.sm.current = self.the_app.sm.next()
