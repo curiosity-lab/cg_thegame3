@@ -19,6 +19,18 @@ class CuriosityScore:
         self.id = datetime.now()
         self.game_sequence = []
         self.cei2 = {}
+        self.init_score()
+
+    def init_score(self):
+        self.score['age'] = ''
+        self.score['gender'] = ''
+        self.score['faculty'] = ''
+        self.score['init'] = ''
+        self.score['total_info'] = ''
+        self.score['multi'] = ''
+        self.score['stretching'] = ''
+        self.score['embracing'] = ''
+
 
     def start_game(self):
         self.start.append(datetime.now())
@@ -41,6 +53,12 @@ class CuriosityScore:
         for k,v in ans.items():
             self.cei2[k] = v
         self.calculate_score()
+
+    def add_details(self, details):
+        for dk, dv in details.items():
+            self.score[dk] = dv
+        self.save()
+
 
     def print(self):
         for i in self.game_sequence:
@@ -95,7 +113,10 @@ class CuriosityScore:
                   total=self.score['total_info'],
                   multi=self.score['multi'],
                   stretching=self.score['stretching'],
-                  embracing=self.score['embracing'])
+                  embracing=self.score['embracing'],
+                  age=self.score['age'],
+                  gender=self.score['gender'],
+                  faculty=self.score['faculty'])
 
     def draw(self):
         pass

@@ -13,7 +13,6 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.graphics import Rectangle
 from kivy.uix.label import Label
 from kivy.clock import Clock
-from curiosity_score import *
 from kivy_logger import *
 
 

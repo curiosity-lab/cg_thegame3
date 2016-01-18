@@ -10,22 +10,30 @@ from kivy.uix.label import Label
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.textinput import TextInput
 from kivy.uix.spinner import Spinner, SpinnerOption
-from kivy.properties import ObjectProperty
-
+from kivy_logger import *
 
 class MySpinnerOption(SpinnerOption):
     pass
 
 
-class HebrewText(TextInput):
+class MySpinner(WidgetLogger, Spinner):
+    pass
+
+class HebrewText(WidgetLogger, TextInput):
     the_text = ''
 
 
 class DetailsForm(BoxLayout):
     details = {}
+    the_app = None
+    age_spinner = None
+    faculty_spinner = None
+    gender_spinner = None
 
-    def __init__(self):
+    def __init__(self, the_app):
         super(DetailsForm, self).__init__()
+        self.the_app = the_app
+
         with self.canvas.before:
             self.rect = Rectangle(source='back2.png')
             self.bind(size=self._update_rect, pos=self._update_rect)
@@ -51,8 +59,7 @@ class DetailsForm(BoxLayout):
                         age=10
                         while age<100:
                             dict[key][kqa].append(str(age))
-                            age+=1
-
+                            age += 1
 
         layout = GridLayout(cols=5, rows=7)
         layoutup = BoxLayout(orientation='vertical')
@@ -63,6 +70,7 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout(size_hint_y=0.2))
 
         last_name_text = HebrewText(size_hint_x=0.5, multiline=False, font_name="DejaVuSans.ttf")
+        last_name_text.name = 'last_name'
         last_name_text.bind(text=self.justify_hebrew)
         layout.add_widget(last_name_text)
 
@@ -71,6 +79,7 @@ class DetailsForm(BoxLayout):
                    color=[0.235294, 0.701961, 0.443137, 1]))
 
         first_name_text = HebrewText(size_hint_x=0.5, multiline=False, font_name="DejaVuSans.ttf")
+        first_name_text.name = 'first_name'
         first_name_text.bind(text=self.justify_hebrew)
         layout.add_widget(first_name_text)
 
@@ -78,19 +87,28 @@ class DetailsForm(BoxLayout):
             Label(text=dict['FirstName'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(BoxLayout())
-        spinner = Spinner(
-        text="רכז",
-        values=dict['Gender']['Genders'],
-        size=(50, 50), font_name="DejaVuSans.ttf",
-        option_cls = MySpinnerOption)
-        layout.add_widget(spinner)
+
+        # gender spinner
+        self.gender_spinner = MySpinner(text="רכז",
+                          values=dict['Gender']['Genders'],
+                          size=(50, 50), font_name="DejaVuSans.ttf",
+                          option_cls = MySpinnerOption)
+        self.gender_spinner.name = 'gender'
+        self.gender_spinner.bind(text=self.gender_spinner.on_spinner_text)
+        layout.add_widget(self.gender_spinner)
+
         layout.add_widget(
             Label(text=dict['Gender']['text'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[0.235294, 0.701961, 0.443137, 1]))
-        spinner = Spinner(
-        text="20",
-        values=dict['Age']['ages'], font_name="DejaVuSans.ttf")
-        layout.add_widget(spinner)
+
+        # age spinner
+        self.age_spinner = MySpinner(
+                        text="20",
+                        values=dict['Age']['ages'], font_name="DejaVuSans.ttf")
+        self.age_spinner.name = 'age'
+        self.age_spinner.bind(text=self.age_spinner.on_spinner_text)
+        layout.add_widget(self.age_spinner)
+
         layout.add_widget(
             Label(text=dict['Age']['text'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[0.235294, 0.701961, 0.443137, 1]))
@@ -102,20 +120,27 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout(size_hint_x=0.2))
         layout.add_widget(BoxLayout(size_hint_x=0.2))
         layout.add_widget(BoxLayout())
-        spinner = Spinner(
-        text="הסדנה",
-        values=dict['Faculty']['Faculties'],
-        size=(50, 50), font_name="DejaVuSans.ttf",
-        option_cls = MySpinnerOption)
-        layout.add_widget(spinner)
+
+        # faculty spinner
+        self.faculty_spinner = MySpinner(text="הסדנה",
+                            values=dict['Faculty']['Faculties'],
+                            size=(50, 50), font_name="DejaVuSans.ttf",
+                            option_cls = MySpinnerOption)
+        self.faculty_spinner.name = 'faculty'
+        self.faculty_spinner.bind(text=self.faculty_spinner.on_spinner_text)
+        layout.add_widget(self.faculty_spinner)
+
         layout.add_widget(
             Label(text=dict['Faculty']['text'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_x=1.5,
                    color=[0.235294, 0.701961, 0.443137, 1]))
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
-        layout.add_widget(Button(background_color=[0.235294, 0.701961, 0.443137, 1],
+
+        end_button = Button(background_color=[0.235294, 0.701961, 0.443137, 1],
                                  text=dict['end_button'], font_size=30, font_name="DejaVuSans.ttf",
-                                 halign='right'))
+                                 halign='right')
+        end_button.bind(on_press=self.save)
+        layout.add_widget(end_button)
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
         layout.add_widget(
@@ -133,3 +158,8 @@ class DetailsForm(BoxLayout):
             instance.the_text = value
             instance.text = value[-1] + instance.the_text[:-1]
 
+    def save(self, instance):
+        details = {'age': self.age_spinner.text,
+                   'gender': self.gender_spinner.text,
+                   'faculty': self.faculty_spinner.text}
+        self.the_app.score.add_details(details)

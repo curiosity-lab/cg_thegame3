@@ -11,14 +11,13 @@ import collections
 from kivy_logger import *
 
 
-class AnswerButton(CheckBox, WidgetLogger):
+class AnswerButton(WidgetLogger, CheckBox):
     question = ""
     answer = ""
     form = None
 
     def on_press(self, *args):
         super(AnswerButton, self).on_press(*args)
-        print(self.answer)
         self.form.set_answer(self.question, self.answer)
 
 

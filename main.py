@@ -21,11 +21,11 @@ class CuriosityApp(App):
 
     def build(self):
         # initialize logger
-        KL.start([DataMode.file, DataMode.encrypted], self.user_data_dir)
+        KL.start([DataMode.file], self.user_data_dir)
 
         self.cg = CuriosityGame(self)
         self.qf = QuestionsForm(self)
-        self.df = DetailsForm()
+        self.df = DetailsForm(self)
 
         self.score = CuriosityScore(self.cg.game_duration, len(self.cg.items), self.user_data_dir)
 

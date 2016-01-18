@@ -28,6 +28,7 @@ class LogAction:
     down = 'down'
     up = 'up'
     text = 'text'
+    spinner = 'spinner'
 
 
 class KL:
@@ -79,7 +80,8 @@ class KivyLogger:
             KivyLogger.connect()
 
         if not is_pycrypto:
-            KivyLogger.base_mode.remove(DataMode.encrypted)
+            if DataMode.encrypted in KivyLogger.base_mode:
+                KivyLogger.base_mode.remove(DataMode.encrypted)
 
         if DataMode.encrypted in KivyLogger.base_mode:
             KivyLogger.get_public_key()
@@ -142,9 +144,14 @@ class KivyLogger:
 
     @staticmethod
     def save(data_str):
+        print(data_str)
         try:
-            KivyLogger.store.put(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'),
-                                 data=str(data_str).encode('ascii'))
+            if DataMode.encrypted in KivyLogger.base_mode:
+                KivyLogger.store.put(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'),
+                                     data=str(data_str).encode('ascii'))
+            else:
+                KivyLogger.store.put(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'),
+                                     data=data_str)
             Logger.info("save:" + str(KivyLogger.filename))
         except:
             Logger.info("save: did not work")
@@ -212,3 +219,8 @@ class WidgetLogger(Widget):
     def on_stop_wl(self, filename):
         KL.log.insert(action=LogAction.stop, obj=self.name, comment=filename)
 
+    def on_text_validate(self):
+        KL.log.insert(action=LogAction.text, obj=self.name, comment=self.text)
+
+    def on_spinner_text(self, instance, value):
+        KL.log.insert(action=LogAction.spinner, obj=self.name, comment=value)
