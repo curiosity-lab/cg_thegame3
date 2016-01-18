@@ -17,6 +17,10 @@ class MySpinnerOption(SpinnerOption):
     pass
 
 
+class HebrewText(TextInput):
+    the_text = ''
+
+
 class DetailsForm(BoxLayout):
     details = {}
 
@@ -57,11 +61,19 @@ class DetailsForm(BoxLayout):
                   color=[0.235294, 0.701961, 0.443137, 1]))
         layoutup.add_widget(BoxLayout(size_hint_y=0.2))
         layout.add_widget(BoxLayout(size_hint_y=0.2))
-        layout.add_widget(TextInput(size_hint_x=0.5))
+
+        last_name_text = HebrewText(size_hint_x=0.5, multiline=False, font_name="DejaVuSans.ttf")
+        last_name_text.bind(text=self.justify_hebrew)
+        layout.add_widget(last_name_text)
+
         layout.add_widget(
             Label(text=dict['LastName'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[0.235294, 0.701961, 0.443137, 1]))
-        layout.add_widget(TextInput(size_hint_x=0.5, font_name="DejaVuSans.ttf"))
+
+        first_name_text = HebrewText(size_hint_x=0.5, multiline=False, font_name="DejaVuSans.ttf")
+        first_name_text.bind(text=self.justify_hebrew)
+        layout.add_widget(first_name_text)
+
         layout.add_widget(
             Label(text=dict['FirstName'], font_size=30, font_name="DejaVuSans.ttf", halign='right', size_hint_y=0.2,
                    color=[0.235294, 0.701961, 0.443137, 1]))
@@ -115,3 +127,9 @@ class DetailsForm(BoxLayout):
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+    def justify_hebrew(self, instance, value):
+        if len(instance.the_text) != len(value):
+            instance.the_text = value
+            instance.text = value[-1] + instance.the_text[:-1]
+

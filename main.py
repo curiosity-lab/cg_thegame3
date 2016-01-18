@@ -33,11 +33,11 @@ class CuriosityApp(App):
 
         screen = Screen(name='thegame')
         screen.add_widget(self.cg.the_widget)
-        self.sm.add_widget(screen)
+        # self.sm.add_widget(screen)
 
         screen = Screen(name="question")
         screen.add_widget(self.qf)
-        self.sm.add_widget(screen)
+        # self.sm.add_widget(screen)
 
         screen = Screen(name="details")
         screen.add_widget(self.df)

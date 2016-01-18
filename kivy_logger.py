@@ -211,3 +211,4 @@ class WidgetLogger(Widget):
 
     def on_stop_wl(self, filename):
         KL.log.insert(action=LogAction.stop, obj=self.name, comment=filename)
+

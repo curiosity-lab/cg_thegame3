@@ -97,7 +97,14 @@ class CuriosityScore:
                   stretching=self.score['stretching'],
                   embracing=self.score['embracing'])
 
-
+    def draw(self):
+        pass
+    # Ellipse:
+    #             pos: 100, 100
+    #             size: 200 * wm.value, 201 * hm.value
+    #             source: 'data/logo/kivy-icon-512.png'
+    #             angle_start: e1.value
+    #             angle_end: e2.value
 
 
 
