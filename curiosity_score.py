@@ -24,12 +24,12 @@ class CuriosityScore:
     def init_score(self):
         self.score['age'] = ''
         self.score['gender'] = ''
-        self.score['faculty'] = ''
-        self.score['init'] = ''
-        self.score['total_info'] = ''
-        self.score['multi'] = ''
-        self.score['stretching'] = ''
-        self.score['embracing'] = ''
+        self.score['faculty'] = -1
+        self.score['init'] = -1
+        self.score['total_info'] = -1
+        self.score['multi'] = -1
+        self.score['stretching'] = -1
+        self.score['embracing'] = -1
 
 
     def start_game(self):

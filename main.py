@@ -4,6 +4,7 @@ kivy.require('1.0.6')
 from cg_graphics_audio import *
 from cei2 import *
 from DetailsForm import *
+from final_form import FinalForm
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy_logger import *
@@ -16,6 +17,7 @@ class CuriosityApp(App):
     cg = None
     qf = None
     df = None
+    ff = None
     score = None
     float_layout = None
 
@@ -26,21 +28,29 @@ class CuriosityApp(App):
         self.cg = CuriosityGame(self)
         self.qf = QuestionsForm(self)
         self.df = DetailsForm(self)
+        self.ff = FinalForm(self)
 
-        self.score = CuriosityScore(self.cg.game_duration, len(self.cg.items), self.user_data_dir)
+        self.score = CuriosityScore(self.cg.game_duration,
+                                    len(self.cg.items),
+                                    self.user_data_dir)
 
         self.sm = ScreenManager()
 
         screen = Screen(name='thegame')
         screen.add_widget(self.cg.the_widget)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name="question")
         screen.add_widget(self.qf)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
+        self.sm.add_widget(screen)
+
+        screen = Screen(name="final")
+        screen.bind(on_enter=self.ff.start)
+        screen.add_widget(self.ff)
         self.sm.add_widget(screen)
 
         self.cg.start()

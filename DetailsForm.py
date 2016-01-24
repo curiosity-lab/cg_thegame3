@@ -137,8 +137,9 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout())
 
         end_button = Button(background_color=[0.235294, 0.701961, 0.443137, 1],
-                                 text=dict['end_button'], font_size=30, font_name="DejaVuSans.ttf",
-                                 halign='right')
+                            text=dict['end_button'], font_size=30,
+                            font_name="DejaVuSans.ttf",
+                            halign='right',on_press=self.next)
         end_button.bind(on_press=self.save)
         layout.add_widget(end_button)
         layout.add_widget(BoxLayout())
@@ -163,3 +164,6 @@ class DetailsForm(BoxLayout):
                    'gender': self.gender_spinner.text,
                    'faculty': self.faculty_spinner.text}
         self.the_app.score.add_details(details)
+
+    def next(self, pars):
+        self.the_app.sm.current = self.the_app.sm.next()
