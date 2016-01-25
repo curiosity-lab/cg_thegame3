@@ -30,5 +30,64 @@
     font_name: "DejaVuSans.ttf"
 
 
+<ConsentForm>:
+    title:title
+    body:body
+    checkbox_agree:checkbox_agree
+    checkbox_txt:checkbox_txt
+    button:button
+    canvas:
+        Rectangle:
+            source: 'back2.jpg'
+            size: self.size
+
+	BoxLayout:
+	    orientation: "vertical"
+	    BoxLayout:
+        Label:
+            id:title
+            font_size:20
+            font_name: "DejaVuSans.ttf"
+
+           #     Rectangle:
+           #         pos: self.pos
+           #         size: self.size
+           #     Rectangle:
+           #         pos: self.pos
+           #         size: self.texture_size
+           #         texture: self.texture
+        BoxLayout:
+        Label:
+
+            halign: 'right'
+            id:body
+            font_name: "DejaVuSans.ttf"
+            text_size: cm(18),cm(8)
+        BoxLayout:
+            size_hint_y:4
+        BoxLayout:
+            BoxLayout:
+                size_hint_x:0.2
+            Button:
+                size_hint_x:0.3
+                id:button
+                font_name: "DejaVuSans.ttf"
+                on_press:root.contin()
+                background_normal: 'C:/Users/Aryeh/Pictures/white_back.jpg'
+                background_color: root.get_color_from_hex("#FFC0CB")
+            BoxLayout:
+
+            Label:
+                size_hint_x:0.4
+                id:checkbox_txt
+                font_name: "DejaVuSans.ttf"
+            CheckBox:
+                size_hint_x:0.3
+                id:checkbox_agree
+                active: False
+                on_press:root.mark_checkbox()
+
+        BoxLayout:
+
 
 

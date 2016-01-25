@@ -4,6 +4,7 @@ kivy.require('1.0.6')
 from cg_graphics_audio import *
 from cei2 import *
 from DetailsForm import *
+from consent_form import ConsentForm
 from final_form import FinalForm
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -15,6 +16,7 @@ from curiosity_score import *
 class CuriosityApp(App):
     sm = None
     cg = None
+    cf = None
     qf = None
     df = None
     ff = None
@@ -26,6 +28,7 @@ class CuriosityApp(App):
         KL.start([DataMode.file], self.user_data_dir)
 
         self.cg = CuriosityGame(self)
+        self.cf = ConsentForm(self)
         self.qf = QuestionsForm(self)
         self.df = DetailsForm(self)
         self.ff = FinalForm(self)
@@ -35,6 +38,10 @@ class CuriosityApp(App):
                                     self.user_data_dir)
 
         self.sm = ScreenManager()
+
+        screen = Screen(name='consent')
+        screen.add_widget(self.cf)
+        self.sm.add_widget(screen)
 
         screen = Screen(name='thegame')
         screen.add_widget(self.cg.the_widget)
