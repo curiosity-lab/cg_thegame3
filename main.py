@@ -53,7 +53,7 @@ class CuriosityApp(App):
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
-        self.sm.add_widget(screen)
+        #self.sm.add_widget(screen)
 
         screen = Screen(name="final")
         screen.bind(on_enter=self.ff.start)

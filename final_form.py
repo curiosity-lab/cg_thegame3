@@ -22,7 +22,7 @@ class FinalForm(BoxLayout):
             for k,v in value.items():
                 self.statements[key][k] = v
 
-        title = "כל הכבוד!"
+        title = u"כל הכבוד!"
         title_label = Label(text=title[::-1], font_size=50,
                             font_name="DejaVuSans.ttf", halign='center', size_hint_y=1.2,
                             color=[0.235294, 0.701961, 0.443137, 1])
@@ -36,7 +36,7 @@ class FinalForm(BoxLayout):
 
     def start(self, pars):
         final_score = 'high'
-        print(self.the_app.score.score)
+
         # total_info in percentage
         if 'total_info' in self.the_app.score.score:
             score = self.the_app.score.score['total_info']
@@ -54,5 +54,5 @@ class FinalForm(BoxLayout):
                 Ellipse(pos=(400,400), size=(200,200),angle_start=0, angle_end=score_angle)
 
         statement = self.statements[final_score]["s1"][::-1]
-        print(statement)
+
         self.statement_label.text = statement
