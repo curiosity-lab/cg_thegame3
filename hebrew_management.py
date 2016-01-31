@@ -23,9 +23,3 @@ class HebrewManagement():
             new_lines.append(txt.strip())
 
         return new_lines
-
-
-
-if __name__ == '__main__':
-    text = "שלום, אני נוסעת, אני לא רוצה שתלוו אותי הלאה"
-    print(HebrewManagement.multiline(text,10))
