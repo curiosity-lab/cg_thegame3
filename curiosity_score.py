@@ -60,7 +60,7 @@ class CuriosityScore:
         self.save()
 
 
-    def print(self):
+    def print_me(self):
         for i in self.game_sequence:
             print(i[0], i[3], i[4])
         print(self.cei2)
