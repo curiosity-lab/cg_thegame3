@@ -19,7 +19,6 @@ class CuriosityScore:
         self.id = datetime.now()
         self.game_sequence = []
         self.cei2 = {}
-        self.init_score()
 
     def init_score(self):
         self.score['age'] = ''
@@ -33,6 +32,7 @@ class CuriosityScore:
 
 
     def start_game(self):
+        self.init_score()
         self.start.append(datetime.now())
 
     def add_game_item_begin(self, item):

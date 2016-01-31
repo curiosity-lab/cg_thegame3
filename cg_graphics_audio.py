@@ -66,7 +66,7 @@ class CuriosityGame:
     the_app = None
     the_widget = None
     is_playing = False
-    game_duration = 30
+    game_duration = 15
 
     def __init__(self, parent_app):
         self.the_app = parent_app
@@ -117,6 +117,9 @@ class CuriosityGame:
         # set the timer of the game
         print('Starting clock...')
         Clock.schedule_once(self.end_game, self.game_duration)
+        for k,v in self.items.items():
+            v.current = 1
+
         self.the_app.score.start_game()
 
 

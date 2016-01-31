@@ -22,12 +22,14 @@
             id: item_lbl
             text: "this is a test"
             pos: 150, 150
-            font_size: '36sp'
-            color: [0.5, 0.3, 0.8, 1.0]
-            font_name: "DejaVuSans.ttf"
+            font_size: 40
+            color: [0.1, 0.3, 0.9, 1.0]
+            font_name: "fonts/the_font_bold.ttf"
+            bold: True
 
 <MySpinnerOption@SpinnerOption>:
-    font_name: "DejaVuSans.ttf"
+    font_name: "fonts/the_font.ttf"
+    font_size: 30
 
 
 <ConsentForm>:
@@ -38,7 +40,7 @@
     button:button
     canvas:
         Rectangle:
-            source: 'back2.jpg'
+            source: 'back3.png'
             size: self.size
 
 	BoxLayout:
@@ -46,8 +48,8 @@
 	    BoxLayout:
         Label:
             id:title
-            font_size:20
-            font_name: "DejaVuSans.ttf"
+            font_size: 48
+            font_name: "fonts/the_font.ttf"
 
            #     Rectangle:
            #         pos: self.pos
@@ -57,12 +59,11 @@
            #         size: self.texture_size
            #         texture: self.texture
         BoxLayout:
-        Label:
-
-            halign: 'right'
+            size_hint_y:2
+        BoxLayout:
+            orientation: "vertical"
             id:body
-            font_name: "DejaVuSans.ttf"
-            text_size: cm(18),cm(8)
+            size_hint_y:8
         BoxLayout:
             size_hint_y:4
         BoxLayout:
@@ -71,23 +72,74 @@
             Button:
                 size_hint_x:0.3
                 id:button
-                font_name: "DejaVuSans.ttf"
+                font_name: "fonts/the_font.ttf"
+                font_size: 20
                 on_press:root.contin()
-                background_normal: 'C:/Users/Aryeh/Pictures/white_back.jpg'
-                background_color: root.get_color_from_hex("#FFC0CB")
+                background_color: (0, 0.71, 1., 1)
+                background_normal: ""
             BoxLayout:
 
             Label:
                 size_hint_x:0.4
                 id:checkbox_txt
-                font_name: "DejaVuSans.ttf"
+                font_name: "fonts/the_font.ttf"
+                color: [0,0,0,1]
             CheckBox:
                 size_hint_x:0.3
                 id:checkbox_agree
                 active: False
                 on_press:root.mark_checkbox()
+                background_checkbox_down: "checkbox_active.png"
+                background_checkbox_normal: "checkbox_inactive.png"
 
         BoxLayout:
 
+<AnswerButton>:
+    background_radio_down: "checkbox_active.png"
+    background_radio_normal: "checkbox_inactive.png"
 
+<FinalForm>:
+    title:title
+    curiosity_lbl:curiosity_lbl
+    end_button:end_button
+    canvas:
+        Rectangle:
+            source: 'back3.png'
+            size: self.size
 
+	BoxLayout:
+	    orientation: "vertical"
+	    BoxLayout:
+	        BoxLayout:
+	            size_hint_x:2
+            Label:
+                id:title
+                font_size: 48
+                font_name: "fonts/the_font.ttf"
+                color: [0,0,0,1]
+
+        BoxLayout:
+            orientation: "horizontal"
+            BoxLayout:
+                size_hint_x: 12
+            Label:
+                size_hint_x: 0.1
+                id:curiosity_lbl
+                font_size: 32
+                font_name: "fonts/the_font.ttf"
+                color: [0,0,0,1]
+                align: "center"
+        BoxLayout:
+            size_hint_y:1
+        BoxLayout:
+            size_hint_y:0.2
+            Button:
+                id:end_button
+                background_color:[0,0.71,1,1]
+                background_normal:""
+                font_size:30
+                font_name:"fonts/the_font.ttf"
+            BoxLayout:
+                size_hint_y:0.2
+        BoxLayout:
+            size_hint_y:0.2

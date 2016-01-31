@@ -38,6 +38,7 @@ class KL:
     def start(mode=None, pathname=''):
         KL.log = KivyLogger
         KL.log.pathname = pathname
+        print(pathname)
         if mode is None:
             mode = []
             Logger.info("KL mode:" + str(mode))
@@ -144,7 +145,7 @@ class KivyLogger:
 
     @staticmethod
     def save(data_str):
-        print(data_str)
+        #print(data_str)
         try:
             if DataMode.encrypted in KivyLogger.base_mode:
                 KivyLogger.store.put(datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f'),

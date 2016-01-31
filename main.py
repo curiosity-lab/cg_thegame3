@@ -60,10 +60,16 @@ class CuriosityApp(App):
         screen.add_widget(self.ff)
         self.sm.add_widget(screen)
 
-        self.cg.start()
-
+        self.start()
         return self.sm
 
+    def start(self):
+        KL.start([DataMode.file], self.user_data_dir)
+        self.cf.start(self)
+        self.qf.start()
+        self.cg.start()
+        self.df.start()
+        self.sm.current = "consent"
 
     def on_pause(self):
         return True
