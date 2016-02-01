@@ -67,6 +67,7 @@ class CuriosityGame:
     the_app = None
     the_widget = None
     is_playing = False
+    the_end = False
     game_duration = 30
 
     def __init__(self, parent_app):
@@ -120,7 +121,8 @@ class CuriosityGame:
         Clock.schedule_once(self.end_game, self.game_duration)
         for k,v in self.items.items():
             v.current = 1
-
+        self.the_end = False
+        self.is_playing = False
         self.the_app.score.start_game()
 
 
@@ -135,6 +137,8 @@ class CuriosityGame:
         self.items[name].on_stop()
         self.show_text("")
         self.the_app.score.add_game_item_end(name)
+        if self.the_end:
+            self.end_game()
 
     def show_text(self, text):
         if len(text) > 0:
@@ -146,7 +150,9 @@ class CuriosityGame:
                 l.text = ''
 
     def end_game(self, dt):
-        self.the_app.sm.current = 'question'
+        self.the_end = True
+        if not self.is_playing:
+            self.the_app.sm.current = 'question'
 
 
 class CuriosityWidget(FloatLayout):

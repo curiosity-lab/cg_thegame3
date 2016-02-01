@@ -51,21 +51,23 @@
             font_size: 48
             font_name: "fonts/the_font.ttf"
         BoxLayout:
-            size_hint_y:2
+            size_hint_y:6
         BoxLayout:
             orientation: "vertical"
             id:body
-            size_hint_y:8
+            size_hint_y:28
         BoxLayout:
-            size_hint_y:4
+            size_hint_y:2
         BoxLayout:
+            size_hint_y: 1
             BoxLayout:
                 size_hint_x:0.2
             Button:
                 size_hint_x:0.3
+                size_hint_y:2
                 id:button
                 font_name: "fonts/the_font.ttf"
-                font_size: 20
+                font_size: 30
                 on_press:root.contin()
                 background_color: (0, 0.71, 1., 1)
                 background_normal: ""
@@ -75,6 +77,7 @@
                 size_hint_x:0.4
                 id:checkbox_txt
                 font_name: "fonts/the_font.ttf"
+                font_size: 30
                 color: [0,0,0,1]
             CheckBox:
                 size_hint_x:0.3

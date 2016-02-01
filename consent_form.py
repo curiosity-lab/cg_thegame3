@@ -14,31 +14,29 @@ class ConsentForm(BoxLayout):
     checkbox_txt=ObjectProperty()
     button=ObjectProperty()
     the_app = None
+    dict = None
+    body_labels = None
 
     def __init__(self, the_app):
         super(ConsentForm, self).__init__()
         self.the_app = the_app
-
-        dict = {'title':self.title,
+        self.dict = {'title':self.title,
                 'body':self.body,
                 'checkbox_txt':self.checkbox_txt,
                 'button':self.button}
         store = JsonStore('consent_form.json').get('agreement')
         for key, value in store.items():
-            dict[key].text = value[::-1]
-        txt = dict['body'].text
+            self.dict[key].text = value[::-1]
+
+        self.body_labels = []
+        txt = self.dict['body'].text
         new_lines = HebrewManagement.multiline(txt, 50)
         for nl in new_lines[::-1]:
-            l = Label(text=nl,
+            self.body_labels.append(Label(text=nl,
                       font_name="fonts/the_font",
-                      font_size=32,
-                      orientation='vertical',
-                      halign='right',
-                      color=[0,0,0,1], size_hint_y=0.5)
-            #l.bind(texture_size=l.setter('size'))
-            dict['body'].add_widget(l)
-            dict['body'].add_widget(BoxLayout(size_hint_y=0.2))
-        self.start(the_app)
+                      font_size=36,
+                      color=[0,0,0,1]))
+            self.dict['body'].add_widget(self.body_labels[-1])
 
     def start(self, the_app):
         self.checkbox_agree.active = False
