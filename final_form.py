@@ -30,7 +30,7 @@ class FinalForm(BoxLayout):
         title_txt = u"כל הכבוד!"
         self.title.text = title_txt[::-1]
 
-        curiosity_txt = u"מדדי סקרנות"
+        curiosity_txt = u"        חובק אפשרויות                 סקרנות                   חיפוש הלא נודע                      "
         self.curiosity_lbl.text = curiosity_txt[::-1]
 
         statement_layout = BoxLayout(orientation="vertical")
@@ -95,9 +95,10 @@ class FinalForm(BoxLayout):
         for nl in range(0, len(new_lines)):
             self.statement_label[nl].text = new_lines[nl]
 
+        self.canvas.remove(Ellipse())
         self.canvas.add(Color(0, 0.71, 1., 1))
         for k in range(0, len(score_angle)):
-            self.canvas.add(Ellipse(pos=(400 + 500 * k,4),size=(350,350),angle_start=0,
+            self.canvas.add(Ellipse(pos=(200 + 400 * k,250),size=(300,300),angle_start=0,
                         angle_end=score_angle[k]))
 
 

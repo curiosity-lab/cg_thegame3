@@ -19,18 +19,17 @@ class MySpinnerOption(SpinnerOption):
 class MySpinner(WidgetLogger, Spinner):
     pass
 
-class HebrewText(WidgetLogger, TextInput):
+
+class LoggedText(WidgetLogger, TextInput):
     the_text = ''
 
 
 class DetailsForm(BoxLayout):
     details = {}
     the_app = None
-    age_spinner = None
+    age_text = None
     faculty_spinner = None
     gender_spinner = None
-    last_name_text = None
-    first_name_text = None
     email_text = None
 
     def __init__(self, the_app):
@@ -46,9 +45,9 @@ class DetailsForm(BoxLayout):
         store = JsonStore('details.json').get('details')
 
         for key, value in store.items():
-            if key in ['FirstName', 'LastName', 'Email', 'end_button','details_title']:
+            if key in ['FirstName', 'LastName', 'Email', 'end_button','details_title','Age']:
                 dict[key] = value[::-1]
-            if key in ['Gender','Faculty','Age']:
+            if key in ['Gender','Faculty']:
                 dict[key] = {}
                 for kqa, qa in value.items():
                     if kqa=='text':
@@ -73,41 +72,10 @@ class DetailsForm(BoxLayout):
                    halign='right', size_hint_y=0.2,
                    color=[0,0,0,1]))
 
-
-
-        # layout.add_widget(BoxLayout(size_hint_y=0.2))
-        self.last_name_text = HebrewText(size_hint_x=0.5,
-                                    multiline=False,
-                                    font_name="fonts/the_font.ttf",
-                                    font_size=30)
-        self.last_name_text.name = 'last_name'
-        self.last_name_text.bind(text=self.justify_hebrew)
-        # layout.add_widget(self.last_name_text)
-
-        # layout.add_widget(
-        #     Label(text=dict['LastName'], font_size=30,
-        #           font_name="fonts/the_font.ttf",
-        #           halign='right', size_hint_y=0.2,
-        #           color=[0,0,0,1]))
-
-        self.first_name_text = HebrewText(size_hint_x=0.5,
-                                     multiline=False,
-                                     font_name="fonts/the_font.ttf",
-                                     font_size=30)
-        self.first_name_text.name = 'first_name'
-        self.first_name_text.bind(text=self.justify_hebrew)
-        # layout.add_widget(self.first_name_text)
-
-        # layout.add_widget(
-        #     Label(text=dict['FirstName'], font_size=30,
-        #           font_name="fonts/the_font.ttf", halign='right',
-        #           size_hint_y=0.2,
-        #           color=[0,0,0,1]))
-
         # === first line ===
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout(size_hint_x=0.2))
-        self.email_text = TextInput(size_hint_x=2)
+        self.email_text = TextInput(size_hint_x=2, font_size=32)
         layout.add_widget(self.email_text)
         layout.add_widget(
             Label(text=dict['Email'], font_size=30,
@@ -132,20 +100,11 @@ class DetailsForm(BoxLayout):
                   color=[0,0,0,1]))
 
         # age spinner
-        self.age_spinner = MySpinner(
-            text="20",
-            values=dict['Age']['ages'],
-            font_name="fonts/the_font.ttf",
-            font_size=30,
-            option_cls = MySpinnerOption)
-        self.age_spinner.name = 'age'
-        self.age_spinner.bind(text=self.age_spinner.on_spinner_text)
-        layout.add_widget(self.age_spinner)
-
+        self.age_text = TextInput(size_hint_x=2, font_size=40, input_filter='int')
+        layout.add_widget(self.age_text)
         layout.add_widget(
-            Label(text=dict['Age']['text'],
-                  font_size=30, font_name="fonts/the_font.ttf",
-                  halign='right', size_hint_y=0.2,
+            Label(text=dict['Age'], font_size=30,
+                  font_name="fonts/the_font.ttf", halign='right',
                   color=[0,0,0,1]))
 
         # === third line ===
@@ -174,7 +133,6 @@ class DetailsForm(BoxLayout):
                   color=[0,0,0,1]))
 
         # === last line ===
-
         end_button = Button(background_color=[0,0.71,1,1],
                             background_normal="",
                             text=dict['end_button'], font_size=30,
@@ -190,12 +148,10 @@ class DetailsForm(BoxLayout):
         self.start()
 
     def start(self):
-        self.first_name_text.text = ""
-        self.last_name_text.text = ""
         self.email_text.text = ""
         self.faculty_spinner.text = self.faculty_spinner.values[0]
         self.gender_spinner.text = self.gender_spinner.values[0]
-        self.age_spinner.text = "20"
+        self.age_text.text = ""
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
@@ -209,7 +165,7 @@ class DetailsForm(BoxLayout):
                 instance.text = value[-1] + instance.the_text[:-1]
 
     def save(self, instance):
-        details = {'age': self.age_spinner.text,
+        details = {'age': self.age_text.text,
                    'gender': self.gender_spinner.text,
                    'faculty': self.faculty_spinner.text}
         self.the_app.score.add_details(details)

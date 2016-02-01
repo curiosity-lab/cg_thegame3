@@ -3,9 +3,7 @@
     "details_title": "שאלון פרטים אישיים",
     "FirstName": "שם פרטי:",
     "LastName": "שם משפחה",
-    "Age": {
-      "text" : "גיל:",
-      "ages" : "10"},
+    "Age": "גיל:",
     "Gender": {
       "text" : "מין:",
       "Genders" :
