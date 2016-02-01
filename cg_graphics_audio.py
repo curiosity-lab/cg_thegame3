@@ -138,7 +138,7 @@ class CuriosityGame:
 
     def show_text(self, text):
         if len(text) > 0:
-            new_lines = HebrewManagement.multiline(text, 50)
+            new_lines = HebrewManagement.multiline(text, 75)
             for nl in range(0, len(new_lines)):
                 self.the_widget.cg_lbl[nl].text = new_lines[nl]
         else:

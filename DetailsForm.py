@@ -72,21 +72,23 @@ class DetailsForm(BoxLayout):
                    font_size=50, font_name="fonts/the_font.ttf",
                    halign='right', size_hint_y=0.2,
                    color=[0,0,0,1]))
-        layout.add_widget(BoxLayout(size_hint_y=0.2))
 
+
+
+        # layout.add_widget(BoxLayout(size_hint_y=0.2))
         self.last_name_text = HebrewText(size_hint_x=0.5,
                                     multiline=False,
                                     font_name="fonts/the_font.ttf",
                                     font_size=30)
         self.last_name_text.name = 'last_name'
         self.last_name_text.bind(text=self.justify_hebrew)
-        layout.add_widget(self.last_name_text)
+        # layout.add_widget(self.last_name_text)
 
-        layout.add_widget(
-            Label(text=dict['LastName'], font_size=30,
-                  font_name="fonts/the_font.ttf",
-                  halign='right', size_hint_y=0.2,
-                  color=[0,0,0,1]))
+        # layout.add_widget(
+        #     Label(text=dict['LastName'], font_size=30,
+        #           font_name="fonts/the_font.ttf",
+        #           halign='right', size_hint_y=0.2,
+        #           color=[0,0,0,1]))
 
         self.first_name_text = HebrewText(size_hint_x=0.5,
                                      multiline=False,
@@ -94,13 +96,15 @@ class DetailsForm(BoxLayout):
                                      font_size=30)
         self.first_name_text.name = 'first_name'
         self.first_name_text.bind(text=self.justify_hebrew)
-        layout.add_widget(self.first_name_text)
+        # layout.add_widget(self.first_name_text)
 
-        layout.add_widget(
-            Label(text=dict['FirstName'], font_size=30,
-                  font_name="fonts/the_font.ttf", halign='right',
-                  size_hint_y=0.2,
-                  color=[0,0,0,1]))
+        # layout.add_widget(
+        #     Label(text=dict['FirstName'], font_size=30,
+        #           font_name="fonts/the_font.ttf", halign='right',
+        #           size_hint_y=0.2,
+        #           color=[0,0,0,1]))
+
+
         layout.add_widget(BoxLayout())
 
         # gender spinner

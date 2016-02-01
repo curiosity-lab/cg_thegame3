@@ -41,15 +41,15 @@ class CuriosityApp(App):
 
         screen = Screen(name='consent')
         screen.add_widget(self.cf)
-        self.sm.add_widget(screen)
+        # self.sm.add_widget(screen)
 
         screen = Screen(name='thegame')
         screen.add_widget(self.cg.the_widget)
-        self.sm.add_widget(screen)
+        # self.sm.add_widget(screen)
 
         screen = Screen(name="question")
         screen.add_widget(self.qf)
-        self.sm.add_widget(screen)
+        # self.sm.add_widget(screen)
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
@@ -68,7 +68,7 @@ class CuriosityApp(App):
         self.cf.start(self)
         self.qf.start()
         self.df.start()
-        self.sm.current = "consent"
+        self.sm.current = "details"
 
     def on_pause(self):
         return True
