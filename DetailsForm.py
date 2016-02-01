@@ -72,21 +72,23 @@ class DetailsForm(BoxLayout):
                    font_size=50, font_name="fonts/the_font.ttf",
                    halign='right', size_hint_y=0.2,
                    color=[0,0,0,1]))
-        layout.add_widget(BoxLayout(size_hint_y=0.2))
 
+
+
+        # layout.add_widget(BoxLayout(size_hint_y=0.2))
         self.last_name_text = HebrewText(size_hint_x=0.5,
                                     multiline=False,
                                     font_name="fonts/the_font.ttf",
                                     font_size=30)
         self.last_name_text.name = 'last_name'
         self.last_name_text.bind(text=self.justify_hebrew)
-        layout.add_widget(self.last_name_text)
+        # layout.add_widget(self.last_name_text)
 
-        layout.add_widget(
-            Label(text=dict['LastName'], font_size=30,
-                  font_name="fonts/the_font.ttf",
-                  halign='right', size_hint_y=0.2,
-                  color=[0,0,0,1]))
+        # layout.add_widget(
+        #     Label(text=dict['LastName'], font_size=30,
+        #           font_name="fonts/the_font.ttf",
+        #           halign='right', size_hint_y=0.2,
+        #           color=[0,0,0,1]))
 
         self.first_name_text = HebrewText(size_hint_x=0.5,
                                      multiline=False,
@@ -94,13 +96,15 @@ class DetailsForm(BoxLayout):
                                      font_size=30)
         self.first_name_text.name = 'first_name'
         self.first_name_text.bind(text=self.justify_hebrew)
-        layout.add_widget(self.first_name_text)
+        # layout.add_widget(self.first_name_text)
 
-        layout.add_widget(
-            Label(text=dict['FirstName'], font_size=30,
-                  font_name="fonts/the_font.ttf", halign='right',
-                  size_hint_y=0.2,
-                  color=[0,0,0,1]))
+        # layout.add_widget(
+        #     Label(text=dict['FirstName'], font_size=30,
+        #           font_name="fonts/the_font.ttf", halign='right',
+        #           size_hint_y=0.2,
+        #           color=[0,0,0,1]))
+
+
         layout.add_widget(BoxLayout())
 
         # gender spinner
@@ -175,7 +179,9 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
         layout.add_widget(
-            Label(text="ךתופתתשה לע הדות", font_size=35, font_name="fonts/the_font.ttf", halign='right', size_hint_x=1.5))
+            Label(text="ךתופתתשה לע הדות", font_size=40,
+                  color=[0,0,0,1],
+                  font_name="fonts/the_font.ttf", halign='right', size_hint_x=1.5))
         layoutup.add_widget(layout)
 
         self.add_widget(layoutup)
@@ -194,6 +200,7 @@ class DetailsForm(BoxLayout):
         self.rect.size = instance.size
 
     def justify_hebrew(self, instance, value):
+        print("justify hebrew", instance, value)
         if len(value) > 0:
             if len(instance.the_text) != len(value):
                 instance.the_text = value

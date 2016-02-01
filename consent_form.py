@@ -31,7 +31,7 @@ class ConsentForm(BoxLayout):
         for nl in new_lines[::-1]:
             l = Label(text=nl,
                       font_name="fonts/the_font",
-                      font_size=30,
+                      font_size=32,
                       orientation='vertical',
                       halign='right',
                       color=[0,0,0,1], size_hint_y=0.5)
@@ -46,7 +46,10 @@ class ConsentForm(BoxLayout):
 
     def contin(self):
         if self.checkbox_agree.active:
-            self.the_app.sm.current = self.the_app.sm.next()
+            # the next screen is the game
+            # start the clock and then transition
+            self.the_app.cg.start()
+            self.the_app.sm.current = "thegame"
         else:
             print("pls mark checkbox")
 

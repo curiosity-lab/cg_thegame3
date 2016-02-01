@@ -34,6 +34,7 @@ class QuestionsForm(BoxLayout):
         with self.canvas.before:
             self.rect = Rectangle(source='back4.png')
             self.bind(size=self._update_rect, pos=self._update_rect)
+
         dict = {'q_in_page': [], 'qu_title': "", 'qu_description': "", 'ques': {},
                 'ans': {}, 'next_button': "", 'prev_button': ""}
         self.answers = {}
@@ -96,7 +97,7 @@ class QuestionsForm(BoxLayout):
                 layout.add_widget(
                     Label(text="תולאש",
                           font_name="fonts/the_font.ttf",
-                          font_size=25,
+                          font_size=30,
                           halign='right', orientation='vertical',
                           color=[0,0,0,1]))
                 layout.add_widget(BoxLayout(size_hint_x=0.1))
@@ -115,7 +116,7 @@ class QuestionsForm(BoxLayout):
             layout.add_widget(
                 Label(halign='right', text=dict['ques'][ques],
                       font_name="fonts/the_font.ttf", orientation='vertical',
-                      font_size=20,
+                      font_size=25,
                       color=[0,0,0,1]))
 
         layoutup.add_widget(layout)
