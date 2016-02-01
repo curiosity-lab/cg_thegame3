@@ -106,25 +106,29 @@
 	            size_hint_x:2
             Label:
                 id:title
-                font_size: 48
+                font_size: 60
                 font_name: "fonts/the_font.ttf"
                 color: [0,0,0,1]
-
+	    BoxLayout:
+	    BoxLayout:
+        BoxLayout:
         BoxLayout:
             orientation: "horizontal"
             BoxLayout:
-                size_hint_x: 12
+                size_hint_x: 1500
             Label:
-                size_hint_x: 0.1
+                size_hint_x: 1
                 id:curiosity_lbl
-                font_size: 32
+                font_size: 40
                 font_name: "fonts/the_font.ttf"
                 color: [0,0,0,1]
                 align: "center"
         BoxLayout:
             size_hint_y:1
         BoxLayout:
-            size_hint_y:0.2
+            size_hint_y:0.5
+            BoxLayout:
+                size_hint_y:0.2
             Button:
                 id:end_button
                 background_color:[0,0.71,1,1]

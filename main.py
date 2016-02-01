@@ -25,7 +25,7 @@ class CuriosityApp(App):
 
     def build(self):
         # initialize logger
-        KL.start([DataMode.file], self.user_data_dir)
+        KL.start([DataMode.file], "/sdcard/Android/curiosity/")# self.user_data_dir)
 
         self.cg = CuriosityGame(self)
         self.cf = ConsentForm(self)
@@ -41,15 +41,15 @@ class CuriosityApp(App):
 
         screen = Screen(name='consent')
         screen.add_widget(self.cf)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name='thegame')
         screen.add_widget(self.cg.the_widget)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name="question")
         screen.add_widget(self.qf)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
@@ -68,7 +68,7 @@ class CuriosityApp(App):
         self.cf.start(self)
         self.qf.start()
         self.df.start()
-        self.sm.current = "details"
+        self.sm.current = "consent"
 
     def on_pause(self):
         return True

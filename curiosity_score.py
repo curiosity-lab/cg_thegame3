@@ -19,6 +19,7 @@ class CuriosityScore:
         self.id = datetime.now()
         self.game_sequence = []
         self.cei2 = {}
+        self.init_score()
 
     def init_score(self):
         self.score['age'] = ''
@@ -45,7 +46,7 @@ class CuriosityScore:
             if i[0] == item and len(i) == 2:
                 i.append(datetime.now())
                 i.append((i[2]-i[1]).seconds)
-                i.append(i[3] / self.max_duration)
+                i.append(i[3] / float(self.max_duration))
         self.calculate_score()
 
     def set_cei2(self, ans):
@@ -67,6 +68,7 @@ class CuriosityScore:
 
 
     def calculate_score(self):
+        print(self.game_sequence)
         # initial exploration
         init_exploration = 0
         if len(self.start) == 2:
@@ -103,7 +105,7 @@ class CuriosityScore:
                 embracing += int(cv[3])
         self.score['stretching'] = stretching
         self.score['embracing'] = embracing
-
+        print(self.score)
         self.save()
 
     def save(self):

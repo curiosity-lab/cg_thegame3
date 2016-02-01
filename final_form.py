@@ -5,7 +5,7 @@ from kivy.uix.label import Label
 from kivy.graphics import *
 from kivy.storage.jsonstore import JsonStore
 from kivy.properties import ObjectProperty
-from kivy.uix.button import Button
+from hebrew_management import HebrewManagement
 
 
 class FinalForm(BoxLayout):
@@ -27,49 +27,79 @@ class FinalForm(BoxLayout):
             for k,v in value.items():
                 self.statements[key][k] = v
 
-        title_txt = "כל הכבוד!"
+        title_txt = u"כל הכבוד!"
         self.title.text = title_txt[::-1]
 
-        curiosity_txt = "מדד סקרנות"
+        curiosity_txt = u"מדדי סקרנות"
         self.curiosity_lbl.text = curiosity_txt[::-1]
 
-        self.statement_label = Label(text="test", font_size=40,
-                                     font_name="fonts/the_font.ttf",
-                                     halign='center', size_hint_y=0.4,
-                                     color=[0,0,0, 1])
+        statement_layout = BoxLayout(orientation="vertical")
+        self.statement_label = []
+        statement_layout.add_widget(BoxLayout(size_hint_y=0.3))
 
-
-        # self.add_widget(title_label)
-        self.add_widget(self.statement_label)
-        self.add_widget(BoxLayout())
-        end_text = "סיום"
+        for k in range(0,4):
+            self.statement_label.append(Label(font_size=40,
+                                              font_name="fonts/the_font.ttf",
+                                              halign='center', size_hint_y=0.4,
+                                              color=[0,0,0, 1]))
+            statement_layout.add_widget(self.statement_label[-1])
+        self.add_widget(statement_layout)
+        end_text = u"סיום"
         self.end_button.text = end_text[::-1]
         self.end_button.bind(on_press=self.next)
 
     def start(self, pars):
         final_score = 'high'
+        score_angle = []
         print(self.the_app.score.score)
+
         # total_info in percentage
         if 'total_info' in self.the_app.score.score:
             score = self.the_app.score.score['total_info']
             if score < 0:
                 score = 0.75
-            score_angle = score * 360
+            score_angle.append(score * 360)
 
-            if score < 0.5:
+            if score < 0.25:
                 final_score = 'low'
             else:
-                if score < 0.75:
+                if score < 0.5:
                     final_score = 'medium'
 
-            with self.canvas:
-                Color(0, 0.71, 1., 1)
-                Ellipse(pos=(400,400), size=(200,200),angle_start=0,
-                        angle_end=score_angle)
+        # stretching in percentage
+        if 'stretching' in self.the_app.score.score:
+            score = self.the_app.score.score['stretching'] / float(25)
+            if score < 0:
+                score = 0.75
+            score_angle.append(score * 360)
 
-        statement = self.statements[final_score]["s1"][::-1]
-        print(statement)
-        self.statement_label.text = statement
+            if score < 0.25:
+                final_score = 'low'
+            else:
+                if score < 0.5:
+                    final_score = 'medium'
+
+        # embracing in percentage
+        if 'embracing' in self.the_app.score.score:
+            score = self.the_app.score.score['embracing'] / float(25)
+            if score < 0:
+                score = 0.75
+            score_angle.append(score * 360)
+
+            if score < 0.25:
+                final_score = 'low'
+            else:
+                if score < 0.5:
+                    final_score = 'medium'
+        new_lines = HebrewManagement.multiline(self.statements[final_score]["s1"][::-1], 75)
+        for nl in range(0, len(new_lines)):
+            self.statement_label[nl].text = new_lines[nl]
+
+        self.canvas.add(Color(0, 0.71, 1., 1))
+        for k in range(0, len(score_angle)):
+            self.canvas.add(Ellipse(pos=(400 + 500 * k,4),size=(350,350),angle_start=0,
+                        angle_end=score_angle[k]))
+
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos

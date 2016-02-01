@@ -64,7 +64,7 @@ class DetailsForm(BoxLayout):
                             dict[key][kqa].append(str(age))
                             age += 1
 
-        layout = GridLayout(cols=5, rows=7)
+        layout = GridLayout(cols=4, rows=7)
         layoutup = BoxLayout(orientation='vertical')
         layoutup.add_widget(BoxLayout(size_hint_y=0.3))
         layoutup.add_widget(
@@ -104,9 +104,17 @@ class DetailsForm(BoxLayout):
         #           size_hint_y=0.2,
         #           color=[0,0,0,1]))
 
-
+        # === first line ===
         layout.add_widget(BoxLayout())
+        layout.add_widget(BoxLayout(size_hint_x=0.2))
+        self.email_text = TextInput(size_hint_x=2)
+        layout.add_widget(self.email_text)
+        layout.add_widget(
+            Label(text=dict['Email'], font_size=30,
+                  font_name="fonts/the_font.ttf", halign='right',
+                  color=[0,0,0,1]))
 
+        # === second line ===
         # gender spinner
         self.gender_spinner = MySpinner(text="רכז",
                                         values=dict['Gender']['Genders'],
@@ -139,15 +147,13 @@ class DetailsForm(BoxLayout):
                   font_size=30, font_name="fonts/the_font.ttf",
                   halign='right', size_hint_y=0.2,
                   color=[0,0,0,1]))
-        layout.add_widget(BoxLayout(size_hint_x=0.2))
-        self.email_text = TextInput(size_hint_x=2)
-        layout.add_widget(self.email_text)
+
+        # === third line ===
         layout.add_widget(
-            Label(text=dict['Email'], font_size=30,
-                  font_name="fonts/the_font.ttf", halign='right',
-                  color=[0,0,0,1]))
-        layout.add_widget(BoxLayout(size_hint_x=0.2))
-        layout.add_widget(BoxLayout(size_hint_x=0.2))
+            Label(text="ךתופתתשה לע הדות", font_size=36,
+                  color=[0,0,0,1],
+                  font_name="fonts/the_font.ttf", halign='right', size_hint_x=1.5))
+
         layout.add_widget(BoxLayout())
 
         # faculty spinner
@@ -166,8 +172,8 @@ class DetailsForm(BoxLayout):
                   font_size=30, font_name="fonts/the_font.ttf",
                   halign='right', size_hint_x=1.5,
                   color=[0,0,0,1]))
-        layout.add_widget(BoxLayout())
-        layout.add_widget(BoxLayout())
+
+        # === last line ===
 
         end_button = Button(background_color=[0,0.71,1,1],
                             background_normal="",
@@ -178,10 +184,6 @@ class DetailsForm(BoxLayout):
         layout.add_widget(end_button)
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
-        layout.add_widget(
-            Label(text="ךתופתתשה לע הדות", font_size=40,
-                  color=[0,0,0,1],
-                  font_name="fonts/the_font.ttf", halign='right', size_hint_x=1.5))
         layoutup.add_widget(layout)
 
         self.add_widget(layoutup)
