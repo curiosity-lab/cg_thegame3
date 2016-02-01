@@ -38,7 +38,9 @@ class ConsentForm(BoxLayout):
                       color=[0,0,0,1]))
             self.dict['body'].add_widget(self.body_labels[-1])
 
+
     def start(self, the_app):
+        self.button.disabled = True
         self.checkbox_agree.active = False
         self.button.background_color = (0, 0.71, 1, 1)
 
@@ -47,15 +49,17 @@ class ConsentForm(BoxLayout):
             # the next screen is the game
             # start the clock and then transition
             self.the_app.cg.start()
-            self.the_app.sm.current = "thegame"
+            self.the_app.sm.current = self.the_app.sm.next()#"thegame"
         else:
             print("pls mark checkbox")
 
     def mark_checkbox(self):
         if self.checkbox_agree.active:
-            self.button.background_color = (0.71, 0, 1., 1)
+            self.button.background_color = (0, 0.71, 1, 1)
+            # self.button.background_color = (0.71, 0, 1., 1)
+            self.button.disabled = False
         else:
-            self.button.background_color = (0, 0, 0.5, 1)
+            self.button.disabled = True
 
     def get_color_from_hex(self, color):
         return get_color_from_hex(color)

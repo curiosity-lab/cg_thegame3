@@ -23,13 +23,18 @@ class CuriosityApp(App):
     score = None
     float_layout = None
 
+    cei2 = None
+
     def build(self):
         # initialize logger
         KL.start([DataMode.file], "/sdcard/Android/curiosity/")# self.user_data_dir)
 
         self.cg = CuriosityGame(self)
         self.cf = ConsentForm(self)
-        self.qf = QuestionsForm(self)
+        self.cei2 = CEI2()
+        self.qf = []
+        for p in range(0, len(self.cei2.page_dict)):
+            self.qf.append(QuestionsForm(self, self.cei2.page_dict[p]))
         self.df = DetailsForm(self)
         self.ff = FinalForm(self)
 
@@ -47,9 +52,10 @@ class CuriosityApp(App):
         screen.add_widget(self.cg.the_widget)
         self.sm.add_widget(screen)
 
-        screen = Screen(name="question")
-        screen.add_widget(self.qf)
-        self.sm.add_widget(screen)
+        for kqf in range(0, len(self.qf)):
+            screen = Screen(name="question"+str(kqf))
+            screen.add_widget(self.qf[kqf])
+            self.sm.add_widget(screen)
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
@@ -66,7 +72,8 @@ class CuriosityApp(App):
     def start(self):
         KL.start([DataMode.file], self.user_data_dir)
         self.cf.start(self)
-        self.qf.start()
+        for qf in self.qf:
+            qf.start()
         self.df.start()
         self.sm.current = "consent"
 

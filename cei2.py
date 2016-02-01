@@ -21,40 +21,68 @@ class AnswerButton(WidgetLogger, CheckBox):
         self.form.set_answer(self.question, self.answer)
 
 
+class CEI2():
+    dict = None
+    page_dict = None
+
+    def __init__(self):
+        self.dict = {'q_in_page': [], 'qu_title': "", 'qu_description': "", 'ques': {},
+                'ans': {}, 'next_button': "", 'prev_button': ""}
+        store = JsonStore('questions.json', encoding='utf-8').get('questionnaire')
+
+        for key, value in store.items():
+            if key in ['qu_title', 'next_button', 'prev_button', 'questions']:
+                self.dict[key] = value[::-1]
+            if key in ['qu_description', 'ques', 'ans']:
+                self.dict[key] = {}
+                for kqa, qa in value.items():
+                    self.dict[key][kqa] = qa[::-1]
+            if key in ['q_in_page']:
+                self.dict[key] = int(value)
+
+        self.dict['ques'] = collections.OrderedDict(sorted(self.dict['ques'].items()))
+        self.dict['ans'] = collections.OrderedDict(sorted(self.dict['ans'].items()))
+
+        k_page = 0
+        k_page_ques = 0
+        self.page_dict = []
+        for k, v in self.dict['ques'].items():
+            if k_page_ques == 0:
+                page_questions = {}
+            page_questions[k] = v
+            k_page_ques += 1
+            if k_page_ques == self.dict['q_in_page']:
+                new_page = {}
+                new_page['ques'] = page_questions
+                self.page_dict.append(new_page)
+                k_page_ques = 0
+
+        for pd in self.page_dict:
+            for k,v in self.dict.items():
+                if k != 'ques':
+                    pd[k] = v
+
 class QuestionsForm(BoxLayout):
     answers = {}
     ans_button = []
     the_app = None
     questions = {}
     next_button = None
+    num_pages = 1
 
-    def __init__(self, app):
+    def __init__(self, app, dict):
         super(QuestionsForm, self).__init__()
         self.the_app = app
         with self.canvas.before:
             self.rect = Rectangle(source='back4.png')
             self.bind(size=self._update_rect, pos=self._update_rect)
 
-        dict = {'q_in_page': [], 'qu_title': "", 'qu_description': "", 'ques': {},
-                'ans': {}, 'next_button': "", 'prev_button': ""}
+
         self.answers = {}
-        store = JsonStore('questions.json', encoding='utf-8').get('questionnaire')
-
-        for key, value in store.items():
-            if key in ['qu_title', 'next_button', 'prev_button', 'questions']:
-                dict[key] = value[::-1]
-            if key in ['qu_description', 'ques', 'ans']:
-                dict[key] = {}
-                for kqa, qa in value.items():
-                    dict[key][kqa] = qa[::-1]
-        dict['ques'] = collections.OrderedDict(sorted(dict['ques'].items()))
-        dict['ans'] = collections.OrderedDict(sorted(dict['ans'].items()))
-
         self.questions = dict['ques']
+        num_questions = len(dict['ques'].keys())
+        print(num_questions)
 
-        layout = GridLayout(cols=len(dict['ans']) + 2,
-                            rows=len(dict['ques']) + 1,
-                            row_default_height=40)
         layoutup = BoxLayout(orientation='vertical')
         layoutup.add_widget(BoxLayout(size_hint_y=0.7))
         layoutup.add_widget(
@@ -80,8 +108,11 @@ class QuestionsForm(BoxLayout):
                   color=[0,0,0,1]))
         layoutup.add_widget(BoxLayout(size_hint_y=0.2))
 
+        # question matrix
+        layout = GridLayout(cols=len(dict['ans']) + 2,
+                            rows=len(dict['ques']) + 1,
+                            row_default_height=400 / num_questions)
         q_counter = 0
-        ans_button = []
         for ques in dict['ques']:
             layout.add_widget(BoxLayout(size_hint_x=0.05))
             q_counter += 1
@@ -97,7 +128,7 @@ class QuestionsForm(BoxLayout):
                 layout.add_widget(
                     Label(text="תולאש",
                           font_name="fonts/the_font.ttf",
-                          font_size=30,
+                          font_size=42,
                           halign='right', orientation='vertical',
                           color=[0,0,0,1]))
                 layout.add_widget(BoxLayout(size_hint_x=0.1))
@@ -116,7 +147,7 @@ class QuestionsForm(BoxLayout):
             layout.add_widget(
                 Label(halign='right', text=dict['ques'][ques],
                       font_name="fonts/the_font.ttf", orientation='vertical',
-                      font_size=25,
+                      font_size=36,
                       color=[0,0,0,1]))
 
         layoutup.add_widget(layout)

@@ -152,7 +152,7 @@ class CuriosityGame:
     def end_game(self, dt):
         self.the_end = True
         if not self.is_playing:
-            self.the_app.sm.current = 'question'
+            self.the_app.sm.current = self.the_app.sm.next()
 
 
 class CuriosityWidget(FloatLayout):
