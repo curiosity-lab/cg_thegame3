@@ -81,7 +81,6 @@ class QuestionsForm(BoxLayout):
         self.answers = {}
         self.questions = dict['ques']
         num_questions = len(dict['ques'].keys())
-        print(num_questions)
 
         layoutup = BoxLayout(orientation='vertical')
         layoutup.add_widget(BoxLayout(size_hint_y=0.7))
@@ -172,15 +171,12 @@ class QuestionsForm(BoxLayout):
         self.add_widget(layoutup)
 
     def start(self):
-        print("qf start")
-        print(self.ans_button)
         for b in self.ans_button:
             b.active = False
         self.next_button.disabled = True
 
     def set_answer(self, question, answer):
         self.answers[question] = answer
-        print(self.answers)
         all_answered = True
         for qk,qv in self.questions.items():
             if qk not in self.answers:

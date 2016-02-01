@@ -27,7 +27,7 @@ class CuriosityApp(App):
 
     def build(self):
         # initialize logger
-        KL.start([DataMode.file], "/sdcard/Android/curiosity/")# self.user_data_dir)
+        KL.start([DataMode.file], self.user_data_dir)
 
         self.cg = CuriosityGame(self)
         self.cf = ConsentForm(self)
@@ -50,16 +50,16 @@ class CuriosityApp(App):
 
         screen = Screen(name='thegame')
         screen.add_widget(self.cg.the_widget)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         for kqf in range(0, len(self.qf)):
             screen = Screen(name="question"+str(kqf))
             screen.add_widget(self.qf[kqf])
-            # self.sm.add_widget(screen)
+            self.sm.add_widget(screen)
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
-        # self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name="final")
         screen.bind(on_enter=self.ff.start)
