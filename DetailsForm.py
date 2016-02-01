@@ -175,7 +175,9 @@ class DetailsForm(BoxLayout):
         layout.add_widget(BoxLayout())
         layout.add_widget(BoxLayout())
         layout.add_widget(
-            Label(text="ךתופתתשה לע הדות", font_size=35, font_name="fonts/the_font.ttf", halign='right', size_hint_x=1.5))
+            Label(text="ךתופתתשה לע הדות", font_size=40,
+                  color=[0,0,0,1],
+                  font_name="fonts/the_font.ttf", halign='right', size_hint_x=1.5))
         layoutup.add_widget(layout)
 
         self.add_widget(layoutup)
@@ -194,6 +196,7 @@ class DetailsForm(BoxLayout):
         self.rect.size = instance.size
 
     def justify_hebrew(self, instance, value):
+        print("justify hebrew", instance, value)
         if len(value) > 0:
             if len(instance.the_text) != len(value):
                 instance.the_text = value

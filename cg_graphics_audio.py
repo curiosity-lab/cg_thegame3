@@ -14,6 +14,7 @@ from kivy.graphics import Rectangle
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy_logger import *
+from hebrew_management import HebrewManagement
 
 
 class Item(Scatter, WidgetLogger):
@@ -127,32 +128,40 @@ class CuriosityGame:
         self.items[name].on_play()
         text = self.items[name].get_text()
         if text:
-            self.the_widget.cg_lbl.text = text
+            self.show_text(text)
         self.the_app.score.add_game_item_begin(name)
 
     def on_stop(self, name, par):
         self.items[name].on_stop()
-        self.the_widget.cg_lbl.text = ''
+        self.show_text("")
         self.the_app.score.add_game_item_end(name)
+
+    def show_text(self, text):
+        if len(text) > 0:
+            new_lines = HebrewManagement.multiline(text, 50)
+            for nl in range(0, len(new_lines)):
+                self.the_widget.cg_lbl[nl].text = new_lines[nl]
+        else:
+            for l in self.the_widget.cg_lbl:
+                l.text = ''
 
     def end_game(self, dt):
         self.the_app.sm.current = 'question'
 
 
 class CuriosityWidget(FloatLayout):
-    cg_lbl = None  # ObjectProperty(None)
+    cg_lbl = None
 
     def __init__(self):
         super(CuriosityWidget, self).__init__()
         with self.canvas.before:
             self.rect = Rectangle(source='cg_background_img.jpg')
             self.bind(size=self._update_rect, pos=self._update_rect)
-        self.cg_lbl = Label(font_name='DejaVuSans.ttf', halign='right', text='',
-                            pos=(10, 10), font_size='24sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5])
-        self.cg_lbl.size = [500, 100]#self.rect.size#[self.width, self.cg_lbl.height]#cg_lbl.texture_size
-        self.cg_lbl.text_size = self.cg_lbl.size
-
-        self.add_widget(self.cg_lbl)
+        self.cg_lbl = []
+        for k in range(0,3):
+            self.cg_lbl.append(Label(font_name='fonts/the_font.ttf', halign='right', text='',
+                            pos=(10, 10 + 30 * k), font_size='24sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5]))
+            self.add_widget(self.cg_lbl[-1])
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos

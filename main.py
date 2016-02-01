@@ -53,7 +53,7 @@ class CuriosityApp(App):
 
         screen = Screen(name="details")
         screen.add_widget(self.df)
-        #self.sm.add_widget(screen)
+        self.sm.add_widget(screen)
 
         screen = Screen(name="final")
         screen.bind(on_enter=self.ff.start)
@@ -67,7 +67,6 @@ class CuriosityApp(App):
         KL.start([DataMode.file], self.user_data_dir)
         self.cf.start(self)
         self.qf.start()
-        self.cg.start()
         self.df.start()
         self.sm.current = "consent"
 
