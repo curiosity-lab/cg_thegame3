@@ -12,7 +12,6 @@ from kivy_logger import *
 from curiosity_score import *
 
 
-
 class CuriosityApp(App):
     sm = None
     cg = None

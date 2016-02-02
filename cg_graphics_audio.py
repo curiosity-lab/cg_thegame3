@@ -25,6 +25,7 @@ class Item(Scatter, WidgetLogger):
     current = 1
     cg = None
     base_pos = None
+    question = {}
 
     def change_img(self, im = '1'):
         if im in self.img:
@@ -111,6 +112,9 @@ class CuriosityGame:
                     except:
                         if 'audio' in t:
                             Logger.info('audio: cant find ' + items_path + t['audio'])
+                    if 'question' in t:
+                        self.items[name].question = {}
+                        self.items[name].question = t['question']
 
         # set widgets
         for key, value in self.items.items():
