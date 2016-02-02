@@ -11,6 +11,7 @@ class CuriosityScore:
     num_options = 0
     score = {}
     pathname = ''
+    learning = {}
 
     def __init__(self, max_duration, num_options, pathname):
         self.max_duration = max_duration
@@ -30,8 +31,12 @@ class CuriosityScore:
         self.score['multi'] = -1
         self.score['stretching'] = -1
         self.score['embracing'] = -1
+        self.score['learning'] = -1
+        self.score['q_asked'] = -1
 
         self.cei2 = {}
+        self.learning = {}
+        self.game_sequence = []
 
 
     def start_game(self):
@@ -56,6 +61,10 @@ class CuriosityScore:
             self.cei2[k] = v
         self.calculate_score()
 
+    def learning_add(self, question, answer):
+        self.learning[question] = answer
+        self.calculate_score()
+
     def add_details(self, details):
         for dk, dv in details.items():
             self.score[dk] = dv
@@ -69,7 +78,6 @@ class CuriosityScore:
 
 
     def calculate_score(self):
-        print(self.game_sequence)
         # initial exploration
         init_exploration = 0
         if len(self.start) == 2:
@@ -108,6 +116,18 @@ class CuriosityScore:
                 embracing += int(cv[3])
         self.score['stretching'] = stretching
         self.score['embracing'] = embracing
+
+        # learning
+        print(self.learning)
+        learning = 0
+        q_asked = 0
+        for lk, lv in self.learning.items():
+            q_asked += 1
+            if lv == 'correct':
+                learning += 1
+        self.score['learning'] = learning
+        self.score['q_asked'] = q_asked
+
         print(self.score)
         self.save()
 

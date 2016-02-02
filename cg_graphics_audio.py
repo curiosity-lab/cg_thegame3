@@ -70,7 +70,7 @@ class CuriosityGame:
     the_widget = None
     is_playing = False
     the_end = False
-    game_duration = 15
+    game_duration = 30
 
     def __init__(self, parent_app):
         self.the_app = parent_app
@@ -100,6 +100,7 @@ class CuriosityGame:
                 self.items[name].change_img('1')
 
             self.items[name].info = {}
+            self.items[name].question = {}
             if 'text' in value:
                 for kt, t in value['text'].items():
                     self.items[name].info[int(kt)] = {'text': t['text']}
@@ -113,8 +114,8 @@ class CuriosityGame:
                         if 'audio' in t:
                             Logger.info('audio: cant find ' + items_path + t['audio'])
                     if 'question' in t:
-                        self.items[name].question = {}
-                        self.items[name].question = t['question']
+                        self.items[name].question[int(kt)] = {}
+                        self.items[name].question[int(kt)] = t['question']
 
         # set widgets
         for key, value in self.items.items():

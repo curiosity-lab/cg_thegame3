@@ -159,8 +159,8 @@ class DetailsForm(BoxLayout):
 
     def start(self):
         self.email_text.text = ""
-        self.faculty_spinner.text = self.faculty_spinner.values[0]
-        self.gender_spinner.text = self.gender_spinner.values[0]
+        self.faculty_spinner.text = self.faculty_spinner.values[0].encode('utf-8')
+        self.gender_spinner.text = self.gender_spinner.values[0].encode('utf-8')
         self.age_text.text = ""
 
     def _update_rect(self, instance, value):

@@ -5,6 +5,7 @@ from cg_graphics_audio import *
 from cei2 import *
 from DetailsForm import *
 from consent_form import ConsentForm
+from learning_form import *
 from final_form import FinalForm
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -17,12 +18,14 @@ class CuriosityApp(App):
     cg = None
     cf = None
     qf = None
+    lf = None
     df = None
     ff = None
     score = None
     float_layout = None
 
     cei2 = None
+    learn = None
 
     def build(self):
         # initialize logger
@@ -30,10 +33,15 @@ class CuriosityApp(App):
 
         self.cg = CuriosityGame(self)
         self.cf = ConsentForm(self)
+
         self.cei2 = CEI2()
         self.qf = []
         for p in range(0, len(self.cei2.page_dict)):
             self.qf.append(QuestionsForm(self, self.cei2.page_dict[p]))
+
+        self.learn = Learning(self)
+        self.lf = [LearningForm(self), LearningForm(self)]
+
         self.df = DetailsForm(self)
         self.ff = FinalForm(self)
 
@@ -56,6 +64,15 @@ class CuriosityApp(App):
             screen.add_widget(self.qf[kqf])
             self.sm.add_widget(screen)
 
+        screen = Screen(name="learning_0")
+        screen.add_widget(self.lf[0])
+        screen.bind(on_pre_enter=self.learn.start)
+        self.sm.add_widget(screen)
+
+        screen = Screen(name="learning_1")
+        screen.add_widget(self.lf[1])
+        self.sm.add_widget(screen)
+
         screen = Screen(name="details")
         screen.add_widget(self.df)
         self.sm.add_widget(screen)
@@ -74,6 +91,7 @@ class CuriosityApp(App):
         for qf in self.qf:
             qf.start()
         self.df.start()
+        self.score.init_score()
         self.sm.current = "consent"
 
     def on_pause(self):
