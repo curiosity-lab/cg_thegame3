@@ -87,7 +87,7 @@ class FinalForm(BoxLayout):
         self.canvas.remove(Ellipse())
         self.canvas.add(Color(0, 0.71, 1., 1))
         for k in range(0, len(score_angle)):
-            self.canvas.add(Ellipse(pos=(300 + 400 * k,350),size=(300,300),angle_start=0,
+            self.canvas.add(Ellipse(pos=(400 + 450 * k,350),size=(300,300),angle_start=0,
                         angle_end=score_angle[k]))
 
 
