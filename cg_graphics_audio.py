@@ -24,6 +24,7 @@ class Item(Scatter, WidgetLogger):
     info = {}
     current = 1
     cg = None
+    base_pos = None
 
     def change_img(self, im = '1'):
         if im in self.img:
@@ -89,7 +90,7 @@ class CuriosityGame:
                 self.items[name].item_lbl.text = value['label'][::-1]
 
             if 'pos' in value:
-                self.items[name].pos = (int(value['pos']['x']), int(value['pos']['y']))
+                self.items[name].base_pos = (int(value['pos']['x']), int(value['pos']['y']))
 
             self.items[name].img = {}
             if 'img' in value:
@@ -121,6 +122,7 @@ class CuriosityGame:
         Clock.schedule_once(self.end_game, self.game_duration)
         for k,v in self.items.items():
             v.current = 1
+            v.pos = v.base_pos
         self.the_end = False
         self.is_playing = False
         self.the_app.score.start_game()
