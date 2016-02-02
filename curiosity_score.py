@@ -31,6 +31,8 @@ class CuriosityScore:
         self.score['stretching'] = -1
         self.score['embracing'] = -1
 
+        self.cei2 = {}
+
 
     def start_game(self):
         self.init_score()
@@ -50,7 +52,6 @@ class CuriosityScore:
         self.calculate_score()
 
     def set_cei2(self, ans):
-        self.cei2 = {}
         for k,v in ans.items():
             self.cei2[k] = v
         self.calculate_score()
@@ -100,8 +101,10 @@ class CuriosityScore:
         embracing = 0
         for ck, cv in self.cei2.items():
             if ck in ['q01', 'q03', 'q05', 'q07', 'q09']:
+                print("stretching: ", cv, cv[3])
                 stretching += int(cv[3])
             else:
+                print("embracing: ", cv, cv[3])
                 embracing += int(cv[3])
         self.score['stretching'] = stretching
         self.score['embracing'] = embracing

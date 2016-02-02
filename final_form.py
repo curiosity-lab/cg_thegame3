@@ -53,22 +53,16 @@ class FinalForm(BoxLayout):
         score_angle = []
         print(self.the_app.score.score)
 
-        # total_info in percentage
-        if 'total_info' in self.the_app.score.score:
-            score = self.the_app.score.score['total_info']
+        # stretching in percentage
+        if 'stretching' in self.the_app.score.score:
+            score = self.the_app.score.score['stretching'] / float(25)
             if score < 0:
                 score = 0.75
             score_angle.append(score * 360)
 
-            if score < 0.25:
-                final_score = 'low'
-            else:
-                if score < 0.5:
-                    final_score = 'medium'
-
-        # stretching in percentage
-        if 'stretching' in self.the_app.score.score:
-            score = self.the_app.score.score['stretching'] / float(25)
+        # total_info in percentage
+        if 'total_info' in self.the_app.score.score:
+            score = self.the_app.score.score['total_info']
             if score < 0:
                 score = 0.75
             score_angle.append(score * 360)
@@ -86,11 +80,6 @@ class FinalForm(BoxLayout):
                 score = 0.75
             score_angle.append(score * 360)
 
-            if score < 0.25:
-                final_score = 'low'
-            else:
-                if score < 0.5:
-                    final_score = 'medium'
         new_lines = HebrewManagement.multiline(self.statements[final_score]["s1"][::-1], 75)
         for nl in range(0, len(new_lines)):
             self.statement_label[nl].text = new_lines[nl]

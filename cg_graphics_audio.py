@@ -140,7 +140,7 @@ class CuriosityGame:
         self.show_text("")
         self.the_app.score.add_game_item_end(name)
         if self.the_end:
-            self.end_game()
+            self.end_game(0.5)
 
     def show_text(self, text):
         if len(text) > 0:

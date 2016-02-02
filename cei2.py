@@ -54,6 +54,7 @@ class CEI2():
             if k_page_ques == self.dict['q_in_page']:
                 new_page = {}
                 new_page['ques'] = page_questions
+                new_page = collections.OrderedDict(sorted(new_page.items()))
                 self.page_dict.append(new_page)
                 k_page_ques = 0
 
@@ -92,17 +93,17 @@ class QuestionsForm(BoxLayout):
         layoutup.add_widget(BoxLayout(size_hint_y=0.1))
         layoutup.add_widget(
             Label(text=dict['qu_description']['d1'],
-                  font_name="fonts/the_font.ttf", font_size=30, halign='right',
+                  font_name="fonts/the_font.ttf", font_size=36, halign='right',
                   size_hint_y=0.15,
                   color=[0,0,0,1]))
         layoutup.add_widget(
             Label(text=dict['qu_description']['d2'],
-                  font_name="fonts/the_font.ttf", font_size=30, halign='right',
+                  font_name="fonts/the_font.ttf", font_size=36, halign='right',
                   size_hint_y=0.15,
                   color=[0,0,0,1]))
         layoutup.add_widget(
             Label(text=dict['qu_description']['d3'],
-                  font_name="fonts/the_font.ttf", font_size=30, halign='right',
+                  font_name="fonts/the_font.ttf", font_size=36, halign='right',
                   size_hint_y=0.15,
                   color=[0,0,0,1]))
         layoutup.add_widget(BoxLayout(size_hint_y=0.2))
@@ -111,8 +112,11 @@ class QuestionsForm(BoxLayout):
         layout = GridLayout(cols=len(dict['ans']) + 2,
                             rows=len(dict['ques']) + 1,
                             row_default_height=400 / num_questions)
+
+        dict['ques'] = collections.OrderedDict(sorted(dict['ques'].items()))
+
         q_counter = 0
-        for ques in dict['ques']:
+        for ques, values in dict['ques'].items():
             layout.add_widget(BoxLayout(size_hint_x=0.05))
             q_counter += 1
             if q_counter == 1:
