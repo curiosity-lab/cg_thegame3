@@ -1,15 +1,10 @@
 #!/usr/bin/kivy
 # -*- coding: utf-8 -*-
-
-import kivy
-kivy.require('1.0.6')
-
 from kivy.uix.scatter import Scatter
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.audio import SoundLoader
 from kivy.uix.floatlayout import FloatLayout
 from functools import partial
-from kivy.storage.jsonstore import JsonStore
 from kivy.graphics import Rectangle
 from kivy.uix.label import Label
 from kivy.clock import Clock

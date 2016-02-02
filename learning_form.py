@@ -5,11 +5,9 @@ from kivy.graphics import *
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.checkbox import CheckBox
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
-import collections
 from kivy_logger import *
-import numpy as np
+from numpy import random
 
 
 class AnswerButton(WidgetLogger, CheckBox):
@@ -63,7 +61,7 @@ class Learning():
                            {'text': q['wrong1'], 'name': 'wrong1'},
                            {'text': q['wrong2'], 'name': 'wrong2'},
                            {'text': q['wrong3'], 'name': 'wrong3'}]
-            answer_sequence = np.random.permutation(4)-1
+            answer_sequence = random.permutation(4)-1
             a_question['answers'] = []
             for a in answer_sequence:
                 a_question['answers'].append(answer_list[a])

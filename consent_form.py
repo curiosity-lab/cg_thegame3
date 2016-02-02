@@ -1,8 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
-from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.storage.jsonstore import JsonStore
 from hebrew_management import HebrewManagement

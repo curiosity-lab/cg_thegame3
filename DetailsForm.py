@@ -4,10 +4,8 @@
 from kivy.graphics import Rectangle
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-from kivy.uix.checkbox import CheckBox
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
-from kivy.storage.jsonstore import JsonStore
 from kivy.uix.textinput import TextInput
 from kivy.uix.spinner import Spinner, SpinnerOption
 from kivy_logger import *
@@ -76,7 +74,7 @@ class DetailsForm(BoxLayout):
         # === first line ===
         layout.add_widget(BoxLayout(size_hint_x=0.2))
 
-        self.age_text = TextInput(size_hint_x=2, font_size=40, input_filter='int')
+        self.age_text = TextInput(size_hint_x=0.5, font_size=40, input_filter='int')
         layout.add_widget(self.age_text)
         layout.add_widget(
             Label(text=dict['Age'], font_size=30,
@@ -100,7 +98,8 @@ class DetailsForm(BoxLayout):
                                          size=(50, 50),
                                          font_name="fonts/the_font.ttf",
                                          font_size=30,
-                                         option_cls = MySpinnerOption)
+                                         option_cls = MySpinnerOption,
+                                         size_hint_x=0.5)
         self.faculty_spinner.name = 'faculty'
         self.faculty_spinner.bind(text=self.faculty_spinner.on_spinner_text)
         layout.add_widget(self.faculty_spinner)

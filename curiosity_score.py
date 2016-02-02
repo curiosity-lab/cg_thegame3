@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 from kivy.storage.jsonstore import JsonStore
 from math import log

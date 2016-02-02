@@ -1,6 +1,5 @@
-#!/usr/bin/kivy
-import kivy
-kivy.require('1.0.6')
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from cg_graphics_audio import *
 from cei2 import *
 from DetailsForm import *
@@ -29,7 +28,7 @@ class CuriosityApp(App):
 
     def build(self):
         # initialize logger
-        KL.start([DataMode.file], self.user_data_dir)
+        KL.start([DataMode.file], "/sdcard/curiosity/")#self.user_data_dir)
 
         self.cg = CuriosityGame(self)
         self.cf = ConsentForm(self)

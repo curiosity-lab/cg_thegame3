@@ -1,5 +1,9 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import json
 import socket
+
 is_pycrypto = True
 try:
     from Crypto.PublicKey import RSA
