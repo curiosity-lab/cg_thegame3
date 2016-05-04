@@ -33,6 +33,7 @@ class LogAction:
     up = 'up'
     text = 'text'
     spinner = 'spinner'
+    data = 'data'
 
 
 class KL:

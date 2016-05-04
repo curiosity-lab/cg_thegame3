@@ -179,8 +179,9 @@ class LearningForm(BoxLayout):
             self.labels[q]['question'].text = questions[q]['question']['text'][::-1]
             for a in range(0, self.ans_per_q):
                 self.labels[q]['answers'][a].text = questions[q]['answers'][a]['text'][::-1]
-                self.answers[q][a].question = questions[q]['question']['name']
-                self.answers[q][a].answer = questions[q]['answers'][a]['name']
+                self.answers[q][a].question = questions[q]['question']['name'] # the actual question
+                self.answers[q][a].answer = questions[q]['answers'][a]['name'] # 'correct' / 'wrong'
+                self.answers[q][a].name = self.answers[q][a].answer + ',' + self.answers[q][a].question
 
     def next(self, pars):
         self.the_app.sm.current = self.next_page

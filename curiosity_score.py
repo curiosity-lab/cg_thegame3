@@ -4,6 +4,7 @@
 from datetime import datetime
 from kivy.storage.jsonstore import JsonStore
 from math import log
+from kivy_logger import *
 
 class CuriosityScore:
     id = ''
@@ -44,12 +45,15 @@ class CuriosityScore:
 
     def start_game(self):
         self.init_score()
-        self.start.append(datetime.now())
+        self.start.append(datetime.now())   # for t0 index, sets the time the game started
 
     def add_game_item_begin(self, item):
         self.game_sequence.append([item, datetime.now()])
-        if len(self.start) == 1:
+        if len(self.start) == 1:    # for t0 index, if this is the first interaction, add the time
             self.start.append(datetime.now())
+            KivyLogger.insert(action=LogAction.data, obj='t0',
+                              comment=self.start[0].strftime('%Y_%m_%d_%H_%M_%S_%f') + ',' +
+                              self.start[1].strftime('%Y_%m_%d_%H_%M_%S_%f'))
 
     def add_game_item_end(self, item):
         for i in self.game_sequence:
