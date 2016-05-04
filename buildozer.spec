@@ -32,7 +32,7 @@ source.exclude_dirs = bin, .buildozer
 version = 1.2.0
 
 # (list) Application requirements
-# comma seperated e.g. requirements = sqlite3,kivy
+# comma seperated e.g. requirements = sqlite3,kivy,
 requirements = kivy,pycrypto,numpy
 
 # (str) Custom source folders for requirements
