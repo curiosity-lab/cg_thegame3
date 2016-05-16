@@ -225,7 +225,7 @@ class WidgetLogger(Widget):
     def on_stop_wl(self, filename):
         KL.log.insert(action=LogAction.stop, obj=self.name, comment=filename)
 
-    def on_text_validate(self):
+    def on_text_change(self, instance, value):
         KL.log.insert(action=LogAction.text, obj=self.name, comment=self.text)
 
     def on_spinner_text(self, instance, value):

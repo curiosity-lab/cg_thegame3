@@ -77,7 +77,9 @@ class DetailsForm(BoxLayout):
         # === first line ===
         layout.add_widget(BoxLayout(size_hint_x=0.2, size_hint_y=0.4))
 
-        self.age_text = TextInput(size_hint_x=0.5, font_size=40, input_filter='int', size_hint_y=0.4)
+        self.age_text = LoggedText(size_hint_x=0.5, font_size=40, input_filter='int', size_hint_y=0.4)
+        self.age_text.bind(text=self.age_text.on_text_change)
+        self.age_text.name = 'age'
         if 'age' in self.what_to_include:
             layout.add_widget(self.age_text)
             layout.add_widget(
@@ -89,7 +91,9 @@ class DetailsForm(BoxLayout):
             layout.add_widget(BoxLayout())
             layout.add_widget(BoxLayout())
 
-        self.email_text = TextInput(size_hint_x=2, font_size=32, size_hint_y=0.4)
+        self.email_text = LoggedText(size_hint_x=2, font_size=32, size_hint_y=0.4)
+        self.email_text.bind(text=self.email_text.on_text_change)
+        self.email_text.name = 'email'
         if 'email' in self.what_to_include:
             layout.add_widget(self.email_text)
             layout.add_widget(
@@ -105,7 +109,8 @@ class DetailsForm(BoxLayout):
         # === second line ===
         # layout.add_widget(BoxLayout(size_hint_x=0.2))
 # gender spinner
-        self.gender_spinner = MySpinner(text="רכז",
+        print(dict['Gender']['Genders'])
+        self.gender_spinner = MySpinner(text=dict['Gender']['Genders'][0],
                                         values=dict['Gender']['Genders'],
                                         size=(50, 50), font_name="fonts/the_font.ttf",
                                         font_size=40, size_hint_y=0.4,
