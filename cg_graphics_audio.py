@@ -7,6 +7,7 @@ from kivy.uix.floatlayout import FloatLayout
 from functools import partial
 from kivy.graphics import Rectangle
 from kivy.uix.label import Label
+from  kivy.uix.behaviors import ButtonBehavior
 from kivy.clock import Clock
 from kivy_logger import *
 from hebrew_management import HebrewManagement
@@ -29,6 +30,7 @@ class Item(Scatter, WidgetLogger):
     def on_transform_with_touch(self, touch):
         if self.collide_point(*touch.pos):
             self.play()
+
 
     def play(self):
         # if still has something to play
@@ -168,7 +170,7 @@ class CuriosityWidget(FloatLayout):
         self.cg_lbl = []
         for k in range(0,3):
             self.cg_lbl.append(Label(font_name='fonts/the_font.ttf', halign='right', text='',
-                            pos=(10, 10 + 30 * k), font_size='24sp', size_hint_y=0.1, color=[0,0.1,1.0,0.5]))
+                            pos=(10, 10 + 50 * k), font_size='48sp', size_hint_y=0.1, color=[0,0.1,0.5,1.0]))
             self.add_widget(self.cg_lbl[-1])
 
     def _update_rect(self, instance, value):

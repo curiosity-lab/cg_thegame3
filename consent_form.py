@@ -6,6 +6,26 @@ from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
 from kivy.storage.jsonstore import JsonStore
 from hebrew_management import HebrewManagement
+from kivy_logger import *
+
+
+class ConsentCheckBox(LoggedCheckBox):
+    the_form = None
+
+    def on_press(self, *args):
+        super(ConsentCheckBox, self).on_press(*args)
+        if self.the_form:
+            self.the_form.mark_checkbox()
+
+
+class ConsentButton(LoggedButton):
+    the_form = None
+
+    def on_press(self, *args):
+        super(ConsentButton, self).on_press(*args)
+        if self.the_form:
+            self.the_form.contin()
+
 
 class ConsentForm(BoxLayout):
     title=ObjectProperty()

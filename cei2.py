@@ -3,22 +3,10 @@
 
 from kivy.graphics import *
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.checkbox import CheckBox
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 import collections
 from kivy_logger import *
-
-
-class AnswerButton(WidgetLogger, CheckBox):
-    question = ""
-    answer = ""
-    form = None
-
-    def on_press(self, *args):
-        super(AnswerButton, self).on_press(*args)
-        self.form.set_answer(self.question, self.answer)
 
 
 class CEI2():

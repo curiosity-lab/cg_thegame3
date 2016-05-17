@@ -16,16 +16,17 @@
         source: root.source
 
         # create initial image to be 400 pixels width
-        size: 400, 400 / self.image_ratio
+        size: 200, 200 / self.image_ratio
 
         Label:
             id: item_lbl
             text: "this is a test"
-            pos: 150, -50
+            pos: 50, -50
             font_size: 40
             color: (0, 0.71, 1., 1)
             font_name: "fonts/the_font_bold.ttf"
             bold: True
+
 
 <MySpinnerOption@SpinnerOption>:
     font_name: "fonts/the_font.ttf"
@@ -62,13 +63,15 @@
             size_hint_y: 1
             BoxLayout:
                 size_hint_x:0.2
-            Button:
+            ConsentButton:
+                name: 'consent_button'
+                the_form: root
                 size_hint_x:0.3
                 size_hint_y:2
                 id:button
                 font_name: "fonts/the_font.ttf"
                 font_size: 30
-                on_press:root.contin()
+#                on_press:root.contin()
                 background_color: (0, 0.71, 1., 1)
                 background_normal: ""
             BoxLayout:
@@ -79,11 +82,13 @@
                 font_name: "fonts/the_font.ttf"
                 font_size: 30
                 color: [0,0,0,1]
-            CheckBox:
+            ConsentCheckBox:
+                name: 'consent_checkbox'
+                the_form: root
                 size_hint_x:0.3
                 id:checkbox_agree
                 active: False
-                on_press:root.mark_checkbox()
+#                on_press:root.mark_checkbox()
                 background_checkbox_down: "checkbox_active.png"
                 background_checkbox_normal: "checkbox_inactive.png"
 
@@ -135,7 +140,8 @@
             size_hint_y:0.5
             BoxLayout:
                 size_hint_y:0.2
-            Button:
+            LoggedButton:
+                name:'final_button'
                 id:end_button
                 background_color:[0,0.71,1,1]
                 background_normal:""
