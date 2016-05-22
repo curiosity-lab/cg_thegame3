@@ -150,7 +150,7 @@ class CuriosityGame:
 
     def show_text(self, text):
         if len(text) > 0:
-            new_lines = HebrewManagement.multiline(text, 75)
+            new_lines = HebrewManagement.multiline(text, 45)
             for nl in range(0, len(new_lines)):
                 self.the_widget.cg_lbl[nl].text = new_lines[nl]
         else:
@@ -174,7 +174,7 @@ class CuriosityWidget(FloatLayout):
         self.cg_lbl = []
         for k in range(0,3):
             self.cg_lbl.append(Label(font_name='fonts/the_font.ttf', halign='right', text='',
-                            pos=(10, 10 + 50 * k), font_size='48sp', size_hint_y=0.1, color=[0,0.1,0.5,1.0]))
+                            pos=(10, 10 + 75 * k), font_size='48sp', size_hint_y=0.1, color=[0,0.1,0.5,1.0]))
             self.add_widget(self.cg_lbl[-1])
 
     def _update_rect(self, instance, value):
