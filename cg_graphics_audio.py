@@ -31,6 +31,10 @@ class Item(Scatter, WidgetLogger):
         if self.collide_point(*touch.pos):
             self.play()
 
+    def on_touch_down(self, touch):
+        super(Item, self).on_touch_down(touch)
+        if self.collide_point(*touch.pos):
+            self.play()
 
     def play(self):
         # if still has something to play
