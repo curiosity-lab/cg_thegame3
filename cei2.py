@@ -6,7 +6,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 import collections
-from kivy_logger import *
+from kivy_communication.logged_widgets import *
+from kivy.storage.jsonstore import JsonStore
 
 
 class CEI2():

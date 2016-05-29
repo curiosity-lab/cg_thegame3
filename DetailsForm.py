@@ -3,16 +3,14 @@
 
 from kivy.graphics import Rectangle
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
-from kivy_logger import *
-
+from kivy_communication.logged_widgets import *
+from kivy.storage.jsonstore import JsonStore
 
 
 class DetailsForm(BoxLayout):
     what_to_include = ['age', 'email', 'gender']    # 'faculty',
-
 
     details = {}
     the_app = None
@@ -65,7 +63,7 @@ class DetailsForm(BoxLayout):
         # === first line ===
         layout.add_widget(BoxLayout(size_hint_x=0.2, size_hint_y=0.4))
 
-        self.age_text = LoggedText(size_hint_x=0.5, font_size=40, input_filter='int', size_hint_y=0.4)
+        self.age_text = LoggedTextInput(size_hint_x=0.5, font_size=40, input_filter='int', size_hint_y=0.4)
         self.age_text.bind(text=self.age_text.on_text_change)
         self.age_text.name = 'age'
         if 'age' in self.what_to_include:
@@ -79,7 +77,7 @@ class DetailsForm(BoxLayout):
             layout.add_widget(BoxLayout())
             layout.add_widget(BoxLayout())
 
-        self.email_text = LoggedText(size_hint_x=2, font_size=32, size_hint_y=0.4)
+        self.email_text = LoggedTextInput(size_hint_x=2, font_size=32, size_hint_y=0.4)
         self.email_text.bind(text=self.email_text.on_text_change)
         self.email_text.name = 'email'
         if 'email' in self.what_to_include:
@@ -98,11 +96,11 @@ class DetailsForm(BoxLayout):
         # layout.add_widget(BoxLayout(size_hint_x=0.2))
 # gender spinner
         print(dict['Gender']['Genders'])
-        self.gender_spinner = MySpinner(text=dict['Gender']['Genders'][0],
-                                        values=dict['Gender']['Genders'],
-                                        size=(50, 50), font_name="fonts/the_font.ttf",
-                                        font_size=40, size_hint_y=0.4,
-                                        option_cls = MySpinnerOption)
+        self.gender_spinner = LoggedSpinner(text=dict['Gender']['Genders'][0],
+                                            values=dict['Gender']['Genders'],
+                                            size=(50, 50), font_name="fonts/the_font.ttf",
+                                            font_size=40, size_hint_y=0.4,
+                                            option_cls = MySpinnerOption)
         self.gender_spinner.name = 'gender'
         self.gender_spinner.bind(text=self.gender_spinner.on_spinner_text)
         if 'gender' in self.what_to_include:
@@ -117,13 +115,13 @@ class DetailsForm(BoxLayout):
             layout.add_widget(BoxLayout(size_hint_y=0.2))
 
         # faculty spinner
-        self.faculty_spinner = MySpinner(text="הסדנה",
-                                         values=dict['Faculty']['Faculties'],
-                                         size=(50, 50),
-                                         font_name="fonts/the_font.ttf",
-                                         font_size=30,
-                                         option_cls = MySpinnerOption,
-                                         size_hint_x=0.5)
+        self.faculty_spinner = LoggedSpinner(text="הסדנה",
+                                             values=dict['Faculty']['Faculties'],
+                                             size=(50, 50),
+                                             font_name="fonts/the_font.ttf",
+                                             font_size=30,
+                                             option_cls = MySpinnerOption,
+                                             size_hint_x=0.5)
         self.faculty_spinner.name = 'faculty'
         self.faculty_spinner.bind(text=self.faculty_spinner.on_spinner_text)
         if 'faculty' in self.what_to_include:

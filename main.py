@@ -8,8 +8,8 @@ from learning_form import *
 from final_form import FinalForm
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy_logger import *
 from curiosity_score import *
+from kivy_communication import KL
 
 
 class CuriosityApp(App):
@@ -28,7 +28,8 @@ class CuriosityApp(App):
 
     def build(self):
         # initialize logger
-        KL.start([DataMode.file], "/sdcard/curiosity/")#self.user_data_dir)
+        #KL.start([DataMode.file, DataMode.communication]) #, "/sdcard/curiosity/", the_ip='127.0.0.1')#self.user_data_dir)
+        KL.start([DataMode.file, DataMode.communication, DataMode.ros], self.user_data_dir)
 
         self.cg = CuriosityGame(self)
         self.cf = ConsentForm(self)
@@ -85,7 +86,7 @@ class CuriosityApp(App):
         return self.sm
 
     def start(self):
-        KL.start([DataMode.file], self.user_data_dir)
+        KL.start([DataMode.file, DataMode.communication, DataMode.ros], self.user_data_dir)
         self.cf.start(self)
         for qf in self.qf:
             qf.start()

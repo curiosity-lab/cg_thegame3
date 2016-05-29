@@ -4,9 +4,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
-from kivy.storage.jsonstore import JsonStore
 from hebrew_management import HebrewManagement
-from kivy_logger import *
+from kivy_communication.logged_widgets import *
+from kivy.storage.jsonstore import JsonStore
 
 
 class ConsentCheckBox(LoggedCheckBox):

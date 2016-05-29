@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import socket
 
 is_pycrypto = True
 try:
@@ -15,19 +14,21 @@ from kivy.logger import Logger
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.widget import Widget
 from os.path import join
-
-from kivy.uix.textinput import TextInput
-from kivy.uix.spinner import Spinner, SpinnerOption
-from kivy.uix.checkbox import CheckBox
-from kivy.uix.button import Button
+from twisted_client import *
 
 
+# Enum DataMode: file, encrupted, communication
 class DataMode:
     file = 'file'
     encrypted = 'encrypted'
     communication = 'communication'
+    ros = 'ros'
+
+    def __init__(self):
+        pass
 
 
+# Enum: LogAction: non, press, play, stop, move, down, up, text, spinner, data
 class LogAction:
     none = 'none'
     press = 'press'
@@ -40,42 +41,66 @@ class LogAction:
     spinner = 'spinner'
     data = 'data'
 
+    def __init__(self):
+        pass
 
+
+# the static class for the kivy logger
 class KL:
     log = None
 
     @staticmethod
-    def start(mode=None, pathname=''):
+    def start(mode=None, pathname=None, the_ip=None):
+        if not pathname:
+            return
+
         KL.log = KivyLogger
         KL.log.pathname = pathname
+
+        if not the_ip:
+            KL.log.configure()
+        else:
+            KL.log.ip = the_ip
+
         print(pathname)
         if mode is None:
             mode = []
             Logger.info("KL mode:" + str(mode))
         KL.log.set_mode(mode)
 
+    def __init__(self):
+        pass
 
+
+# THE class
 class KivyLogger:
     logs = []
     t0 = None
     base_mode = []
-    socket = None
     public_key = None
     filename = None
-    pathname = ''
     store = None
+
+    pathname = ''
+    ip = None
+
+    @staticmethod
+    def configure():
+        try:
+            the_file = KL.log.pathname + '/../kivy_communication/config.json'
+            print(the_file)
+            with open(the_file) as json_file:
+                json_data = json.load(json_file)
+
+            KL.log.ip = str(json_data['ip'])
+        except:
+            print('no json configure file')
+            pass
 
     @staticmethod
     def __init__():
         KivyLogger.logs = []
         KivyLogger.t0 = datetime.now()
-
-
-    @staticmethod
-    def __del__():
-        if KivyLogger.socket is not None:
-            KivyLogger.socket.close()
-
 
     @staticmethod
     def set_mode(mode):
@@ -97,35 +122,6 @@ class KivyLogger:
         if DataMode.encrypted in KivyLogger.base_mode:
             KivyLogger.get_public_key()
             KivyLogger.save('public_key:' + KivyLogger.public_key.exportKey("PEM"))
-
-    @staticmethod
-    def connect():
-        try:
-            KivyLogger.socket = socket.socket()
-            host = socket.gethostbyaddr('192.168.43.70')
-            Logger.info(("host:" + str(host)))
-            port = 12345
-            KivyLogger.socket.connect((host[0], port))
-        except:
-            KivyLogger.base_mode.remove(DataMode.communication)
-            Logger.info("connect: fail")
-        pass
-
-    @staticmethod
-    def get_public_key():
-        if DataMode.communication in KivyLogger.base_mode:
-            # get from communication
-            pub_pem = KivyLogger.socket.recv(1024)
-        else:
-            private_key = RSA.generate(2048, e=65537)
-            prv_pem = private_key.exportKey("PEM")
-            store = JsonStore(KivyLogger.filename + '.enc')
-            store.put('private_key', pem=prv_pem)
-
-            pub_pem = private_key.publickey().exportKey("PEM")
-
-        KivyLogger.public_key = RSA.importKey(pub_pem)
-        pass
 
     @staticmethod
     def reset():
@@ -152,7 +148,7 @@ class KivyLogger:
         if DataMode.file in mode:
             KivyLogger.save(data_str)
 
-
+    # file
     @staticmethod
     def save(data_str):
         #print(data_str)
@@ -167,13 +163,32 @@ class KivyLogger:
         except:
             Logger.info("save: did not work")
 
+    # encryption
     @staticmethod
     def to_str(log):
         data = {'time': log['time'].strftime('%Y_%m_%d_%H_%M_%S_%f'),
                 'action': log['action'],
                 'obj': log['obj'],
                 'comment': log['comment']}
+        if DataMode.ros in KivyLogger.base_mode:
+            data = {'log': data}
         return str(json.dumps(data))
+
+    @staticmethod
+    def get_public_key():
+        if DataMode.communication in KivyLogger.base_mode:
+            # get from communication
+            pub_pem = KivyLogger.socket.recv(1024)
+        else:
+            private_key = RSA.generate(2048, e=65537)
+            prv_pem = private_key.exportKey("PEM")
+            store = JsonStore(KivyLogger.filename + '.enc')
+            store.put('private_key', pem=prv_pem)
+
+            pub_pem = private_key.publickey().exportKey("PEM")
+
+        KivyLogger.public_key = RSA.importKey(pub_pem)
+        pass
 
     @staticmethod
     def encrypt(data_str):
@@ -182,11 +197,27 @@ class KivyLogger:
             return data_str
         return data_str
 
+    # communication
+    @staticmethod
+    def connect():
+        try:
+            KC.client = TwistedClient(the_ip=KL.log.ip)
+            KC.client.connect_to_server(KC.client.ip)
+        except:
+            KivyLogger.base_mode.remove(DataMode.communication)
+            Logger.info("connect: fail")
+        pass
+
     @staticmethod
     def send_data(data_str):
         if DataMode.communication in KivyLogger.base_mode:
-            KivyLogger.socket.send(data_str.encode())
+            KC.client.send_message(data_str.encode())
         pass
+
+    @staticmethod
+    def __del__():
+        if KivyLogger.socket is not None:
+            KivyLogger.socket.close()
 
 
 class WidgetLogger(Widget):
@@ -236,32 +267,13 @@ class WidgetLogger(Widget):
     def on_spinner_text(self, instance, value):
         KL.log.insert(action=LogAction.spinner, obj=self.name, comment=value)
 
+    def force_on_touch_down(self, touch):
+        self.log_touch(LogAction.down, touch)
 
-class MySpinnerOption(SpinnerOption):
-    pass
+    def force_on_touch_up(self, touch):
+        self.log_touch(LogAction.up, touch)
 
-
-class MySpinner(WidgetLogger, Spinner):
-    pass
-
-
-class LoggedText(WidgetLogger, TextInput):
-    the_text = ''
-
-
-class LoggedButton(WidgetLogger, Button):
-    pass
-
-
-class LoggedCheckBox(WidgetLogger, CheckBox):
-    pass
-
-
-class AnswerButton(WidgetLogger, CheckBox):
-    question = ""
-    answer = ""
-    form = None
-
-    def on_press(self, *args):
-        super(AnswerButton, self).on_press(*args)
-        self.form.set_answer(self.question, self.answer)
+''' Example usage:
+KL.start([DataMode.file], "/sdcard/curiosity/")#self.user_data_dir)
+# Logged* widgets
+'''

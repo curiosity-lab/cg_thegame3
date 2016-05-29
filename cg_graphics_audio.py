@@ -7,9 +7,8 @@ from kivy.uix.floatlayout import FloatLayout
 from functools import partial
 from kivy.graphics import Rectangle
 from kivy.uix.label import Label
-from  kivy.uix.behaviors import ButtonBehavior
 from kivy.clock import Clock
-from kivy_logger import *
+from kivy_communication.kivy_logger import *
 from hebrew_management import HebrewManagement
 
 
@@ -28,13 +27,20 @@ class Item(Scatter, WidgetLogger):
             self.source = self.img[im]
 
     def on_transform_with_touch(self, touch):
-        if self.collide_point(*touch.pos):
-            self.play()
+        pass
+        # if self.collide_point(*touch.pos):
+        #     self.play()
 
     def on_touch_down(self, touch):
         super(Item, self).on_touch_down(touch)
         if self.collide_point(*touch.pos):
+            self.force_on_touch_down(touch)
             self.play()
+
+    def on_touch_up(self, touch):
+        super(Item, self).on_touch_up(touch)
+        if self.collide_point(*touch.pos):
+            self.force_on_touch_up(touch)
 
     def play(self):
         # if still has something to play
